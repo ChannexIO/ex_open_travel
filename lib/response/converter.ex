@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Response.Converter do
+defmodule ExOpenTravel.Response.Converter do
   @callback list_nodes() :: list()
   @callback convert({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
 

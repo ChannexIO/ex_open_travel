@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Meta do
+defmodule ExOpenTravel.Meta do
   defstruct request: nil,
             response: nil,
             method: nil,

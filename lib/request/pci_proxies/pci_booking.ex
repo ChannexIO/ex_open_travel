@@ -1,5 +1,5 @@
-defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
-  alias ExVerticalBooking.Request
+defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
+  alias ExOpenTravel.Request
   @api_endpoint "https://service.pcibooking.net/api"
 
   @spec proxy_send({String.t(), map()}, map()) :: {:ok, map(), map()} | {:error, map(), map()}
@@ -41,7 +41,7 @@ defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
     get_url("/payments/paycard/capture",
       sessionToken: temp_session,
       httpMethod: "POST",
-      profileName: "VerticalBooking",
+      profileName: "OpenTravel",
       targetURI: endpoint,
       saveCVV: true
     )

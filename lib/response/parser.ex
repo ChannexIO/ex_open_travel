@@ -1,11 +1,11 @@
-defmodule ExVerticalBooking.Response.Parser do
+defmodule ExOpenTravel.Response.Parser do
   @moduledoc """
   Provides a functions for parse an xml-like response body.
   """
 
   import SweetXml, only: [xpath: 2, sigil_x: 2]
-  alias ExVerticalBooking.Response
-  alias ExVerticalBooking.Response.FaultProcessor
+  alias ExOpenTravel.Response
+  alias ExOpenTravel.Response.FaultProcessor
 
   @soap_version_namespaces %{
     "1.1" => :"http://schemas.xmlsoap.org/soap/envelope/",
@@ -145,7 +145,7 @@ defmodule ExVerticalBooking.Response.Parser do
   defp apply_namespace_to_tag(nil, tag), do: tag
   defp apply_namespace_to_tag(env_namespace, tag), do: env_namespace <> ":" <> tag
 
-  defp soap_version, do: Application.fetch_env!(:ex_vertical_booking, :globals)[:version]
+  defp soap_version, do: Application.fetch_env!(:ex_open_travel, :globals)[:version]
 
   def handle_response(
         {:ok,

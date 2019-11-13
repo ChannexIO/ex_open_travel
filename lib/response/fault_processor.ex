@@ -1,5 +1,5 @@
-defmodule ExVerticalBooking.Response.FaultProcessor do
-  alias ExVerticalBooking.Error
+defmodule ExOpenTravel.Response.FaultProcessor do
+  alias ExOpenTravel.Error
 
   def create_response(e, meta) do
     e = convert(e)

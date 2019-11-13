@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Request.Helpers do
+defmodule ExOpenTravel.Request.Helpers do
   def build_status_application_control(
         %{
           start: sac_start,

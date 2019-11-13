@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Request.PCIProxies.Fixtures do
+defmodule ExOpenTravel.Request.PCIProxies.Fixtures do
   @fixture %{
     vb_response: ~s(
 <?xml version="1.0" encoding="UTF-8"?>
@@ -875,7 +875,7 @@ Commission Amount: 146.25
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
   ),
-    response: %ExVerticalBooking.Response{
+    response: %ExOpenTravel.Response{
       body: "",
       headers: [
         {"Cache-Control", "no-cache"},
@@ -892,7 +892,7 @@ Commission Amount: 146.25
         {"X-Content-Type-Options", "nosniff"}
       ],
       request_url:
-        "https://service.pcibooking.net/api/payments/paycard/capture?sessionToken=79574c3482bc498f82b7afe8be295eb0&httpMethod=POST&profileName=VerticalBooking&targetURI=http://www.mocky.io/v2/5db0329e2f00007200c1398b&saveCVV=true",
+        "https://service.pcibooking.net/api/payments/paycard/capture?sessionToken=79574c3482bc498f82b7afe8be295eb0&httpMethod=POST&profileName=OpenTravel&targetURI=http://www.mocky.io/v2/5db0329e2f00007200c1398b&saveCVV=true",
       status_code: 200
     },
     meta: %{

@@ -1,7 +1,7 @@
-defmodule ExVerticalBooking.Request.OtaPing do
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Request
-  alias ExVerticalBooking.Request.Document
+defmodule ExOpenTravel.Request.OtaPing do
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request
+  alias ExOpenTravel.Request.Document
 
   @action "OTA_Ping"
 
@@ -15,7 +15,7 @@ defmodule ExVerticalBooking.Request.OtaPing do
 
   ## Example
 
-    ExVerticalBooking.Request.OtaPing.execute()
+    ExOpenTravel.Request.OtaPing.execute()
   """
   @spec execute(credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(credentials, meta) do

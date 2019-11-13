@@ -1,10 +1,10 @@
-defmodule ExVerticalBooking.Response.OtaReadTest do
+defmodule ExOpenTravel.Response.OtaReadTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_response_ota_read
+  doctest ExOpenTravel
+  @moduletag :ex_open_travel_response_ota_read
 
-  alias ExVerticalBooking.Response.Converter
-  alias ExVerticalBooking.Response.OtaRead
+  alias ExOpenTravel.Response.Converter
+  alias ExOpenTravel.Response.OtaRead
 
   @raw_message {"OTA_ResRetrieveRS", %{},
                 [

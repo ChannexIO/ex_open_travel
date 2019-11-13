@@ -1,9 +1,9 @@
-defmodule ExVerticalBooking.Request.PCIProxies.PCIBookingTest do
+defmodule ExOpenTravel.Request.PCIProxies.PCIBookingTest do
   use ExUnit.Case
-  @moduletag :ex_vertical_booking_pci_booking
+  @moduletag :ex_open_travel_pci_booking
 
-  alias ExVerticalBooking.Request.PCIProxies.Fixtures
-  alias ExVerticalBooking.Request.PCIProxies.PCIBooking
+  alias ExOpenTravel.Request.PCIProxies.Fixtures
+  alias ExOpenTravel.Request.PCIProxies.PCIBooking
   doctest PCIBooking
 
   @meta Fixtures.get(:meta)

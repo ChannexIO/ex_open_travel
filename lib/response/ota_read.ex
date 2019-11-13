@@ -1,6 +1,6 @@
-defmodule ExVerticalBooking.Response.OtaRead do
-  @behaviour ExVerticalBooking.Response.Converter
-  alias ExVerticalBooking.Response.Converter
+defmodule ExOpenTravel.Response.OtaRead do
+  @behaviour ExOpenTravel.Response.Converter
+  alias ExOpenTravel.Response.Converter
 
   @list_nodes [
     "OTA_ResRetrieveRS/ReservationsList",

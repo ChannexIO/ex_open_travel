@@ -1,6 +1,6 @@
-defmodule ExVerticalBooking.Request do
+defmodule ExOpenTravel.Request do
   @moduledoc "Get HTTP request after validation payload"
-  alias ExVerticalBooking.Response.Parser
+  alias ExOpenTravel.Response.Parser
 
   @spec send({String.t(), map()}, map(), keyword()) ::
           {:ok, map(), map()} | {:error, map(), map()}

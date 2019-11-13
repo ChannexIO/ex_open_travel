@@ -1,7 +1,7 @@
-defmodule ExVerticalBooking.Request.OtaHotelResNotif do
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Request
-  alias ExVerticalBooking.Request.{Document}
+defmodule ExOpenTravel.Request.OtaHotelResNotif do
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request
+  alias ExOpenTravel.Request.{Document}
 
   @action "OTA_HotelResNotif"
 

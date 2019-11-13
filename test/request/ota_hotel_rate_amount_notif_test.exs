@@ -1,9 +1,9 @@
-defmodule ExVerticalBooking.Request.OtaHotelRateAmountNotifTest do
+defmodule ExOpenTravel.Request.OtaHotelRateAmountNotifTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_request_ota_hotel_rate_amount
+  doctest ExOpenTravel
+  @moduletag :ex_open_travel_request_ota_hotel_rate_amount
 
-  alias ExVerticalBooking.Request.OtaHotelRateAmountNotif
+  alias ExOpenTravel.Request.OtaHotelRateAmountNotif
 
   @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
   @meta %{

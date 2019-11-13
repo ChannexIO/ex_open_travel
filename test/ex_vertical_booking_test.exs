@@ -1,5 +1,5 @@
-defmodule ExVerticalBookingTest do
+defmodule ExOpenTravelTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking
+  doctest ExOpenTravel
+  @moduletag :ex_open_travel
 end

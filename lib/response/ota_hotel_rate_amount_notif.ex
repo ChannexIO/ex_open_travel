@@ -1,6 +1,6 @@
-defmodule ExVerticalBooking.Response.OtaHotelRateAmountNotif do
-  @behaviour ExVerticalBooking.Response.Converter
-  alias ExVerticalBooking.Response.Converter
+defmodule ExOpenTravel.Response.OtaHotelRateAmountNotif do
+  @behaviour ExOpenTravel.Response.Converter
+  alias ExOpenTravel.Response.Converter
 
   @list_nodes []
 

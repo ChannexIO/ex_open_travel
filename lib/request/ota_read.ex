@@ -1,7 +1,7 @@
-defmodule ExVerticalBooking.Request.OtaRead do
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Request.PCIProxies.PCIBooking
-  alias ExVerticalBooking.Request.{Document}
+defmodule ExOpenTravel.Request.OtaRead do
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request.PCIProxies.PCIBooking
+  alias ExOpenTravel.Request.{Document}
   @action "OTA_Read"
 
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}

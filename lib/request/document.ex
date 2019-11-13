@@ -1,8 +1,8 @@
-defmodule ExVerticalBooking.Request.Document do
+defmodule ExOpenTravel.Request.Document do
   @moduledoc """
   Headers generator by soap action and custom headers.
   """
-  alias ExVerticalBooking.Response.FaultProcessor
+  alias ExOpenTravel.Response.FaultProcessor
 
   @definitions %{
     "xmlns:SOAP-ENV" => "http://schemas.xmlsoap.org/soap/envelope/",

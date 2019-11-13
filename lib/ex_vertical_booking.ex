@@ -1,12 +1,12 @@
-defmodule ExVerticalBooking do
+defmodule ExOpenTravel do
   @moduledoc """
-  Documentation for ExVerticalBooking.
+  Documentation for ExOpenTravel.
   """
 
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Response
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Response
 
-  alias ExVerticalBooking.Request.{
+  alias ExOpenTravel.Request.{
     OtaHotelBookingRuleNotif,
     OtaHotelInvCountNotif,
     OtaHotelRateAmountNotif,
@@ -15,12 +15,12 @@ defmodule ExVerticalBooking do
     OtaRead
   }
 
-  alias ExVerticalBooking.Response.OtaHotelBookingRuleNotif, as: OtaHotelBookingRuleNotifConverter
-  alias ExVerticalBooking.Response.OtaHotelInvCountNotif, as: OtaHotelInvCountNotifConverter
-  alias ExVerticalBooking.Response.OtaHotelRateAmountNotif, as: OtaHotelRateAmountNotifConverter
-  alias ExVerticalBooking.Response.OtaHotelResNotif, as: OtaHotelResNotifConverter
-  alias ExVerticalBooking.Response.OtaPing, as: OtaPingConverter
-  alias ExVerticalBooking.Response.OtaRead, as: OtaReadConverter
+  alias ExOpenTravel.Response.OtaHotelBookingRuleNotif, as: OtaHotelBookingRuleNotifConverter
+  alias ExOpenTravel.Response.OtaHotelInvCountNotif, as: OtaHotelInvCountNotifConverter
+  alias ExOpenTravel.Response.OtaHotelRateAmountNotif, as: OtaHotelRateAmountNotifConverter
+  alias ExOpenTravel.Response.OtaHotelResNotif, as: OtaHotelResNotifConverter
+  alias ExOpenTravel.Response.OtaPing, as: OtaPingConverter
+  alias ExOpenTravel.Response.OtaRead, as: OtaReadConverter
 
   @type credentials :: %{endpoint: String.t(), password: String.t(), user: String.t()}
 
@@ -32,7 +32,7 @@ defmodule ExVerticalBooking do
 
   ## Example
 
-    ExVerticalBooking.ota_ping()
+    ExOpenTravel.ota_ping()
   """
   @spec ota_ping(credentials) :: {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
   def ota_ping(credentials) do
