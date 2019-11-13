@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Request.OtaHotelInvCountNotif do
+defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
   alias ExOpenTravel.Meta
   alias ExOpenTravel.Request
   alias ExOpenTravel.Request.{Document, Helpers}

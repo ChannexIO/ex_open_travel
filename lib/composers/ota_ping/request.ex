@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Request.OtaPing do
+defmodule ExOpenTravel.Composers.OtaPing.Request do
   alias ExOpenTravel.Meta
   alias ExOpenTravel.Request
   alias ExOpenTravel.Request.Document
@@ -15,7 +15,7 @@ defmodule ExOpenTravel.Request.OtaPing do
 
   ## Example
 
-    ExOpenTravel.Request.OtaPing.execute()
+    ExOpenTravel.Composers.OtaPing.Request.execute()
   """
   @spec execute(credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(credentials, meta) do

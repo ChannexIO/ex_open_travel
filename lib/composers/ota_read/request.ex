@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Request.OtaRead do
+defmodule ExOpenTravel.Composers.OtaRead.Request do
   alias ExOpenTravel.Meta
   alias ExOpenTravel.Request.PCIProxies.PCIBooking
   alias ExOpenTravel.Request.{Document}

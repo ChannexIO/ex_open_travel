@@ -1,10 +1,10 @@
-defmodule ExOpenTravel.Response.OtaReadTest do
+defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
   use ExUnit.Case
   doctest ExOpenTravel
   @moduletag :ex_open_travel_response_ota_read
 
   alias ExOpenTravel.Response.Converter
-  alias ExOpenTravel.Response.OtaRead
+  alias ExOpenTravel.Composers.OtaRead.Response
 
   @raw_message {"OTA_ResRetrieveRS", %{},
                 [

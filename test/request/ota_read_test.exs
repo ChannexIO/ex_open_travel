@@ -1,9 +1,9 @@
-defmodule ExOpenTravel.Request.OtaReadTest do
+defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
   use ExUnit.Case
   doctest ExOpenTravel
   @moduletag :ex_open_travel_request_ota_read
 
-  alias ExOpenTravel.Request.OtaRead
+  alias ExOpenTravel.Composers.OtaRead.Request
 
   @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
   @meta %{

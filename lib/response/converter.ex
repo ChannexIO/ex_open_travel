@@ -1,54 +1,23 @@
 defmodule ExOpenTravel.Response.Converter do
-  @callback list_nodes() :: list()
-  @callback convert({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
+  @callback get_mapping_table() :: SweetXpath.t()
+  @callback convert_body({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
 
-  def convert({:ok, struct, meta}, list_nodes) do
-    {:ok, wrap(%{}, struct, [], list_nodes), meta}
-  end
+  import SweetXml
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Response.FaultProcessor
 
-  def convert(response, _), do: response
-
-  defp wrap(acc, {key, %{}, [value]}, _prev, _list_nodes) when is_binary(value) do
-    Map.put(acc, atomize(key), value)
-  end
-
-  defp wrap(acc, {key, args, childs}, prev, list_nodes) do
-    Map.put(
-      acc,
-      atomize(key),
-      case get_type_for([key | prev], list_nodes) do
-        :list ->
-          childs
-          |> Enum.reduce([], fn child, acc ->
-            [wrap(%{}, child, [key | prev], list_nodes) | acc]
-          end)
-          |> Enum.reverse()
-
-        :map ->
-          arguments =
-            Enum.reduce(
-              args,
-              %{},
-              fn {key, value}, acc -> Map.put(acc, atomize("@#{key}"), value) end
-            )
-
-          Enum.reduce(childs, arguments, fn child, acc ->
-            wrap(acc, child, [key | prev], list_nodes)
-          end)
-      end
-    )
-  end
-
-  defp get_type_for(path, list_nodes) do
-    str_path = path |> Enum.reverse() |> Enum.join("/")
-
-    if Enum.member?(list_nodes, str_path) do
-      :list
-    else
-      :map
+  @spec convert({atom, String.t(), Meta.t()}, SweetXpath.t()) ::
+          {:ok, map, Meta.t()} | {:error, atom, Meta.t()}
+  def convert({:ok, xml, meta}, sweet_xpath) do
+    try do
+      {:ok, xmap(xml, sweet_xpath), meta}
+      |> FaultProcessor.create_response(meta)
+    rescue
+      e in ArgumentError -> FaultProcessor.create_response(e, meta)
+      e in FunctionClauseError -> FaultProcessor.create_response(e, meta)
+    catch
+      :exit, e -> FaultProcessor.create_response({:exit, e}, meta)
+      :fatal, e -> FaultProcessor.create_response({:fatal, e}, meta)
     end
   end
-
-  defp atomize(key) when is_binary(key), do: String.to_atom(key)
-  defp atomize(key), do: key
 end

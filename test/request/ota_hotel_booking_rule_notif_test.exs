@@ -1,9 +1,9 @@
-defmodule ExOpenTravel.Request.OtaHotelBookingRuleNotifTest do
+defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
   use ExUnit.Case
   doctest ExOpenTravel
   @moduletag :ex_open_travel_request_ota_hotel_booking_rule_notif
 
-  alias ExOpenTravel.Request.OtaHotelBookingRuleNotif
+  alias ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request
 
   @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
 
