@@ -19,7 +19,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_hotel_booking_rule_notif/2" do
     {element, _meta} =
-      OtaHotelBookingRuleNotif.build_hotel_booking_rule_notif(
+      Request.build_hotel_booking_rule_notif(
         %{
           hotel_code: @hotel_code,
           rule_messages: [
@@ -111,7 +111,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_hotel_booking_rule_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelBookingRuleNotif.build_hotel_booking_rule_notif(
+             Request.build_hotel_booking_rule_notif(
                %{hotel_code: @hotel_code, rule_messages: []},
                @meta
              )
@@ -119,7 +119,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_booking_rules/1" do
     element =
-      OtaHotelBookingRuleNotif.build_booking_rules([
+      Request.build_booking_rules([
         %{
           lengths_of_stay: [
             %{time: "2", time_unit: "Day", min_max_message_type: "SetMinLOS"}
@@ -145,7 +145,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_booking_rule/1" do
     element =
-      OtaHotelBookingRuleNotif.build_booking_rule(%{
+      Request.build_booking_rule(%{
         lengths_of_stay: [
           %{time: "2", time_unit: "Day", min_max_message_type: "SetMinLOS"}
         ],
@@ -157,7 +157,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_lengths_of_stay/1" do
     element =
-      OtaHotelBookingRuleNotif.build_lengths_of_stay([
+      Request.build_lengths_of_stay([
         %{
           time: "2",
           time_unit: "Day",
@@ -170,7 +170,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   test "build_restriction_status/1" do
     element =
-      OtaHotelBookingRuleNotif.build_restriction_status(%{
+      Request.build_restriction_status(%{
         restriction: "Departure",
         status: "Close"
       })
@@ -179,7 +179,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
   end
 
   test "destination_system_codes/1" do
-    element = OtaHotelBookingRuleNotif.destination_system_codes([1, 2, 3])
+    element = Request.destination_system_codes([1, 2, 3])
 
     element |> XmlBuilder.generate()
   end

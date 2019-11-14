@@ -3,9 +3,6 @@ defmodule ExOpenTravel do
   Documentation for ExOpenTravel.
   """
 
-  alias ExOpenTravel.Meta
-  alias ExOpenTravel.Response
-
   alias ExOpenTravel.Composers.{
     OtaHotelBookingRuleNotif,
     OtaHotelInvCountNotif,
@@ -14,6 +11,9 @@ defmodule ExOpenTravel do
     OtaPing,
     OtaRead
   }
+
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Response
 
   @type credentials :: %{endpoint: String.t(), password: String.t(), user: String.t()}
 

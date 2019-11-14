@@ -16,7 +16,7 @@ defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
     errors: []
   }
   test "build_hotel_rate_amount_notif" do
-    {element, _meta} = OtaRead.build_read(%{hotel_code: @hotel_code}, @meta)
+    {element, _meta} = Request.build_read(%{hotel_code: @hotel_code}, @meta)
 
     element |> XmlBuilder.generate()
 

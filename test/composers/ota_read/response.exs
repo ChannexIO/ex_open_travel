@@ -309,6 +309,7 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
   }
 
   test "convert" do
+    assert false
     assert {:ok, @message, %{}} ==
              Converter.convert({:ok, @raw_message, %{}}, OtaRead.list_nodes())
   end

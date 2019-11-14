@@ -16,7 +16,7 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.RequestTest do
   }
   test "build_hotel_res_notif" do
     {element, _meta} =
-      OtaHotelResNotif.build_hotel_res_notif(
+      Request.build_hotel_res_notif(
         %{
           hotel_reservations: [
             %{
@@ -70,12 +70,12 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.RequestTest do
 
   test "build_hotel_res_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelResNotif.build_hotel_res_notif(%{hotel_reservations: []}, @meta)
+             Request.build_hotel_res_notif(%{hotel_reservations: []}, @meta)
   end
 
   test "build_unique_id/1" do
     element =
-      OtaHotelResNotif.build_unique_id(%{
+      Request.build_unique_id(%{
         type: "14",
         id_context: "CrsConfirmNumber",
         id: "287329696/87030894|8953"
@@ -90,7 +90,7 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.RequestTest do
 
   test "build_res_global_info/1" do
     element =
-      OtaHotelResNotif.build_res_global_info(%{
+      Request.build_res_global_info(%{
         hotel_reservation_ids: [
           %{
             res_id_type: "10",

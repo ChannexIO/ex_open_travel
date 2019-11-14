@@ -17,7 +17,7 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.RequestTest do
   }
   test "build_hotel_rate_amount_notif" do
     {element, _meta} =
-      OtaHotelRateAmountNotif.build_hotel_rate_amount_notif(
+      Request.build_hotel_rate_amount_notif(
         %{
           hotel_code: @hotel_code,
           rate_amount_messages: [
@@ -82,7 +82,7 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.RequestTest do
 
   test "build_hotel_rate_amount_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelRateAmountNotif.build_hotel_rate_amount_notif(
+             Request.build_hotel_rate_amount_notif(
                %{
                  hotel_code: @hotel_code,
                  rate_amount_messages: []
