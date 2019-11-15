@@ -1,11 +1,11 @@
-defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Response do
+defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
   @behaviour ExOpenTravel.Response.Converter
   alias ExOpenTravel.Response.Converter
   import SweetXml
 
   @sweet_xpath [
-    OTA_HotelBookingRuleNotifRS: [
-      ~x"//*[local-name() = 'OTA_HotelBookingRuleNotifRS']",
+    OTA_HotelRateAmountNotifRS: [
+      ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Version: ~x"./@Version"os,
       EchoToken: ~x"./@EchoToken"os,
       TimeStamp: ~x"./@TimeStamp"os,
@@ -18,6 +18,6 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Response do
       ]
     ]
   ]
-  def get_mapping_table, do: @sweet_xpath
+  def get_mapping_struct, do: @sweet_xpath
   def convert_body(struct), do: Converter.convert(struct, @sweet_xpath)
 end

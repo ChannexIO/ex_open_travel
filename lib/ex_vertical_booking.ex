@@ -32,7 +32,7 @@ defmodule ExOpenTravel do
 
   def ota_ping(credentials, customization) do
     mapping_response =
-      Map.get(customization, :mapping_response, OtaPing.Response.get_mapping_table())
+      Map.get(customization, :mapping_response, OtaPing.Mapping.get_mapping_struct())
 
     credentials
     |> OtaPing.Request.execute(prepare_meta())
@@ -55,7 +55,7 @@ defmodule ExOpenTravel do
       Map.get(
         customization,
         :mapping_response,
-        OtaHotelInvCountNotif.Response.get_mapping_table()
+        OtaHotelInvCountNotif.Mapping.get_mapping_struct()
       )
 
     params
@@ -79,7 +79,7 @@ defmodule ExOpenTravel do
       Map.get(
         customization,
         :mapping_response,
-        OtaHotelRateAmountNotif.Response.get_mapping_table()
+        OtaHotelRateAmountNotif.Mapping.get_mapping_struct()
       )
 
     params
@@ -103,7 +103,7 @@ defmodule ExOpenTravel do
       Map.get(
         customization,
         :mapping_response,
-        OtaHotelBookingRuleNotif.Response.get_mapping_table()
+        OtaHotelBookingRuleNotif.Mapping.get_mapping_struct()
       )
 
     params
@@ -120,7 +120,7 @@ defmodule ExOpenTravel do
 
   def ota_hotel_res_notif(booking_ids, credentials, customization) do
     mapping_response =
-      Map.get(customization, :mapping_response, OtaHotelResNotif.Response.get_mapping_table())
+      Map.get(customization, :mapping_response, OtaHotelResNotif.Mapping.get_mapping_struct())
 
     %{
       hotel_reservations:
@@ -158,7 +158,7 @@ defmodule ExOpenTravel do
 
   def ota_read(%{hotel_code: _} = params, credentials, customization) do
     mapping_response =
-      Map.get(customization, :mapping_response, OtaRead.Response.get_mapping_table())
+      Map.get(customization, :mapping_response, OtaRead.Mapping.get_mapping_struct())
 
     params
     |> OtaRead.Request.execute(credentials, prepare_meta())

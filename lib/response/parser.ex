@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Response.Parser do
+defmodule ExOpenTravel.Response.FaultParser do
   @moduledoc """
   Provides a functions for parse an xml-like response body.
   """
@@ -11,13 +11,14 @@ defmodule ExOpenTravel.Response.Parser do
     "1.1" => :"http://schemas.xmlsoap.org/soap/envelope/",
     "1.2" => :"http://www.w3.org/2003/05/soap-envelope"
   }
+
   @doc """
   Executing with xml response body.
 
   If a list is empty then `parse/1` returns full parsed response structure into map.
   """
-  @spec parse(String.t(), atom(), map) :: map()
-  def parse(xml_response, :fault, meta) do
+  @spec parse(String.t(),  map) :: map()
+  def parse(xml_response, meta) do
     xml_response = String.trim(xml_response)
 
     try do
@@ -41,21 +42,6 @@ defmodule ExOpenTravel.Response.Parser do
     end
   end
 
-  def parse(xml_response, _response_type, meta) do
-    xml_response = String.trim(xml_response)
-
-    try do
-      body_tag = get_body_tag(xml_response)
-
-      {:ok, xml_response |> xpath(~x"//#{body_tag}/*"l) |> parse_elements() |> List.first(), meta}
-    rescue
-      e in ArgumentError -> FaultProcessor.create_response(e, meta)
-      e in FunctionClauseError -> FaultProcessor.create_response(e, meta)
-    catch
-      :exit, e -> FaultProcessor.create_response({:exit, e}, meta)
-      :fatal, e -> FaultProcessor.create_response({:fatal, e}, meta)
-    end
-  end
 
   @spec parse_record(tuple()) :: map() | String.t()
   defp parse_record({:xmlElement, tag, _, _, _, _, _, attributes, elements, _, _, _}) do

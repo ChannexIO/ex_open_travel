@@ -1,5 +1,5 @@
 defmodule ExOpenTravel.Response.Converter do
-  @callback get_mapping_table() :: SweetXpath.t()
+  @callback get_mapping_struct() :: SweetXpath.t()
   @callback convert_body({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
 
   import SweetXml
@@ -11,7 +11,6 @@ defmodule ExOpenTravel.Response.Converter do
   def convert({:ok, xml, meta}, sweet_xpath) do
     try do
       {:ok, xmap(xml, sweet_xpath), meta}
-      |> FaultProcessor.create_response(meta)
     rescue
       e in ArgumentError -> FaultProcessor.create_response(e, meta)
       e in FunctionClauseError -> FaultProcessor.create_response(e, meta)
@@ -20,4 +19,6 @@ defmodule ExOpenTravel.Response.Converter do
       :fatal, e -> FaultProcessor.create_response({:fatal, e}, meta)
     end
   end
+
+  def convert({:error, _, meta} = e, _), do: FaultProcessor.create_response(e, meta)
 end

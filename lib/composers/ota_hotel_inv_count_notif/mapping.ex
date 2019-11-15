@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Response do
+defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Mapping do
   @behaviour ExOpenTravel.Response.Converter
   alias ExOpenTravel.Response.Converter
   import SweetXml
@@ -18,6 +18,6 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Response do
       ]
     ]
   ]
-  def get_mapping_table, do: @sweet_xpath
+  def get_mapping_struct, do: @sweet_xpath
   def convert_body(struct), do: Converter.convert(struct, @sweet_xpath)
 end
