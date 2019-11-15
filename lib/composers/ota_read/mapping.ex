@@ -408,10 +408,23 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
       TimeStamp: ~x"./@TimeStamp"os,
       Success: ~x"./*[local-name() = 'Success']/text()"os,
       Errors: [
-        ~x"./*[local-name() = 'Errors']"ol,
-        Error: ~x"./*[local-name() = 'Error']/text()"os,
-        Type: ~x"./*[local-name() = 'Error']/@Type"os,
-        Code: ~x"./*[local-name() = 'Error']/@Code"os
+        ~x"./*[local-name() = 'Errors']"l,
+        Error: [
+          ~x"./*[local-name() = 'Error']"l,
+          Error: ~x"./text()"os,
+          Type: ~x"./*[local-name() = 'Error']/@Type"os,
+          Code: ~x"./*[local-name() = 'Error']/@Code"os
+        ]
+      ],
+      Warnings: [
+        ~x"./*[local-name() = 'Warnings']"l,
+        Warning: [
+          ~x"./*[local-name() = 'Warning']"l,
+          Warning: ~x"./text()"s,
+          Type: ~x"./@Type"os,
+          Code: ~x"./@Code"os,
+          RecordID: ~x"./@RecordID"os
+        ]
       ],
       ReservationsList: [
         ~x"./*[local-name() = 'ReservationsList']"ol,

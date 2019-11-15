@@ -781,6 +781,7 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
       Success: "",
       EchoToken: "echo-abc123",
       Errors: [],
+      Warnings: [],
       TimeStamp: "2005-08-01T09:32:47+08:00",
       Version: "1.0"
     }
