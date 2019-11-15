@@ -1,4 +1,4 @@
-defmodule ExOpenTravel.Response.FaultParser do
+defmodule ExOpenTravel.Response.Parser do
   @moduledoc """
   Provides a functions for parse an xml-like response body.
   """
