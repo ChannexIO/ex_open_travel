@@ -2,14 +2,19 @@ defmodule ExOpenTravel.Response.FaultProcessor do
   alias ExOpenTravel.Error
 
   def create_response(e, meta) do
-    e = convert(e)
+    error = convert(e)
+    message = Error.message(error)
 
-    {:error, e,
-      meta |> Map.put(:success, false) |> Map.put(:errors, [Error.message(e) | meta.errors])}
+    {:error, error,
+     meta |> Map.put(:success, false) |> Map.update(:errors, [message], &[message | &1])}
   end
 
-  def convert(%{faultcode: code, faultstring: string}), do: Error.exception({:http_error, {code, string}})
-  def convert(%{"faultcode" => code, "faultstring" => string}), do: Error.exception({:http_error, {code, string}})
+  def convert(%{faultcode: code, faultstring: string}),
+    do: Error.exception({:http_error, {code, string}})
+
+  def convert(%{"faultcode" => code, "faultstring" => string}),
+    do: Error.exception({:http_error, {code, string}})
+
   def convert({:fatal, reason}), do: Error.exception({:fatal, reason})
   def convert({:exit, reason}), do: Error.exception({:exit, reason})
   def convert({:badrpc, {_, reason}}), do: Error.exception(reason)

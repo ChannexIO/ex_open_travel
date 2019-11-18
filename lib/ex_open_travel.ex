@@ -31,12 +31,21 @@ defmodule ExOpenTravel do
   def ota_ping(credentials, customization \\ %{})
 
   def ota_ping(credentials, customization) do
-    mapping_response =
-      Map.get(customization, :mapping_response, OtaPing.Mapping.get_mapping_struct())
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaPing.Mapping.get_action_name(),
+          success_mapping: OtaPing.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaPing.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaPing.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaPing.Mapping.get_mapping_for_payload()
+        },
+        customization
+      )
 
     credentials
     |> OtaPing.Request.execute(prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   @doc """
@@ -51,16 +60,21 @@ defmodule ExOpenTravel do
         credentials,
         customization
       ) do
-    mapping_response =
-      Map.get(
-        customization,
-        :mapping_response,
-        OtaHotelInvCountNotif.Mapping.get_mapping_struct()
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaHotelInvCountNotif.Mapping.get_action_name(),
+          success_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_payload()
+        },
+        customization
       )
 
     params
     |> OtaHotelInvCountNotif.Request.execute(credentials, prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   @doc """
@@ -75,16 +89,21 @@ defmodule ExOpenTravel do
         credentials,
         customization
       ) do
-    mapping_response =
-      Map.get(
-        customization,
-        :mapping_response,
-        OtaHotelRateAmountNotif.Mapping.get_mapping_struct()
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaHotelRateAmountNotif.Mapping.get_action_name(),
+          success_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_payload()
+        },
+        customization
       )
 
     params
     |> OtaHotelRateAmountNotif.Request.execute(credentials, prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   @doc """
@@ -99,16 +118,21 @@ defmodule ExOpenTravel do
         credentials,
         customization
       ) do
-    mapping_response =
-      Map.get(
-        customization,
-        :mapping_response,
-        OtaHotelBookingRuleNotif.Mapping.get_mapping_struct()
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaHotelBookingRuleNotif.Mapping.get_action_name(),
+          success_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_payload()
+        },
+        customization
       )
 
     params
     |> OtaHotelBookingRuleNotif.Request.execute(credentials, prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   @doc """
@@ -119,8 +143,17 @@ defmodule ExOpenTravel do
   def ota_hotel_res_notif(booking_ids, credentials, customization \\ %{})
 
   def ota_hotel_res_notif(booking_ids, credentials, customization) do
-    mapping_response =
-      Map.get(customization, :mapping_response, OtaHotelResNotif.Mapping.get_mapping_struct())
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaHotelResNotif.Mapping.get_action_name(),
+          success_mapping: OtaHotelResNotif.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaHotelResNotif.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaHotelResNotif.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaHotelResNotif.Mapping.get_mapping_for_payload()
+        },
+        customization
+      )
 
     %{
       hotel_reservations:
@@ -146,7 +179,7 @@ defmodule ExOpenTravel do
         )
     }
     |> OtaHotelResNotif.Request.execute(credentials, prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   @doc """
@@ -157,12 +190,21 @@ defmodule ExOpenTravel do
   def ota_read(params, credentials, customization \\ %{})
 
   def ota_read(%{hotel_code: _} = params, credentials, customization) do
-    mapping_response =
-      Map.get(customization, :mapping_response, OtaRead.Mapping.get_mapping_struct())
+    response_mapping =
+      Map.merge(
+        %{
+          action: OtaRead.Mapping.get_action_name(),
+          success_mapping: OtaRead.Mapping.get_mapping_for_success(),
+          warning_mapping: OtaRead.Mapping.get_mapping_for_warnings(),
+          error_mapping: OtaRead.Mapping.get_mapping_for_errors(),
+          payload_mapping: OtaRead.Mapping.get_mapping_for_payload()
+        },
+        customization
+      )
 
     params
     |> OtaRead.Request.execute(credentials, prepare_meta())
-    |> Response.parse_response(mapping_response)
+    |> Response.parse_response(response_mapping)
   end
 
   defp prepare_meta() do

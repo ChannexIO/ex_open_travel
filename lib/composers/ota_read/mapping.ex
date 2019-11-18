@@ -406,7 +406,23 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
       Version: ~x"./@Version"os,
       EchoToken: ~x"./@EchoToken"os,
       TimeStamp: ~x"./@TimeStamp"os,
-      Success: ~x"./*[local-name() = 'Success']/text()"os,
+      ReservationsList: [
+        ~x"./*[local-name() = 'ReservationsList']"ol,
+        HotelReservation: @hotel_reservation_type
+      ]
+    ]
+  ]
+
+  @success [
+    OTA_ResRetrieveRS: [
+      ~x"//*[local-name() = 'OTA_ResRetrieveRS']",
+      Success: ~x"./*[local-name() = 'Success']"
+    ]
+  ]
+
+  @errors [
+    OTA_ResRetrieveRS: [
+      ~x"//*[local-name() = 'OTA_ResRetrieveRS']",
       Errors: [
         ~x"./*[local-name() = 'Errors']"l,
         Error: [
@@ -415,7 +431,13 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
           Type: ~x"./*[local-name() = 'Error']/@Type"os,
           Code: ~x"./*[local-name() = 'Error']/@Code"os
         ]
-      ],
+      ]
+    ]
+  ]
+
+  @warnings [
+    OTA_ResRetrieveRS: [
+      ~x"//*[local-name() = 'OTA_ResRetrieveRS']",
       Warnings: [
         ~x"./*[local-name() = 'Warnings']"l,
         Warning: [
@@ -425,14 +447,16 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
           Code: ~x"./@Code"os,
           RecordID: ~x"./@RecordID"os
         ]
-      ],
-      ReservationsList: [
-        ~x"./*[local-name() = 'ReservationsList']"ol,
-        HotelReservation: @hotel_reservation_type
       ]
     ]
   ]
 
-  def get_mapping_struct, do: @sweet_xpath
+  @action :OTA_ResRetrieveRS
+
+  def get_action_name, do: @action
+  def get_mapping_for_success, do: @success
+  def get_mapping_for_errors, do: @errors
+  def get_mapping_for_warnings, do: @warnings
+  def get_mapping_for_payload, do: @sweet_xpath
   def convert_body(struct), do: Converter.convert(struct, @sweet_xpath)
 end

@@ -2,7 +2,7 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
   use ExUnit.Case
   doctest ExOpenTravel
   @moduletag :ex_open_travel_response_ota_read
-
+  import SweetXml
   alias ExOpenTravel.Response.Converter
   alias ExOpenTravel.Composers.OtaRead.Mapping
 
@@ -778,21 +778,32 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
           ]
         }
       ],
-      Success: "",
       EchoToken: "echo-abc123",
-      Errors: [],
-      Warnings: [],
       TimeStamp: "2005-08-01T09:32:47+08:00",
       Version: "1.0"
     }
   }
 
   test "convert success" do
-    assert {:ok, @message, %{}} ==
-             Converter.convert({:ok, @raw_message, %{}}, Mapping.get_mapping_struct())
+    mapping = %{
+      action: Mapping.get_action_name(),
+      success_mapping: Mapping.get_mapping_for_success(),
+      warning_mapping: Mapping.get_mapping_for_warnings(),
+      error_mapping: Mapping.get_mapping_for_errors(),
+      payload_mapping: Mapping.get_mapping_for_payload()
+    }
+
+    assert {:ok, @message, %{}} == Converter.convert({:ok, @raw_message, %{}}, mapping)
   end
 
   test "convert fail" do
+    mapping = %{
+      action: Mapping.get_action_name(),
+      success_mapping: Mapping.get_mapping_for_success(),
+      warning_mapping: Mapping.get_mapping_for_warnings(),
+      error_mapping: Mapping.get_mapping_for_errors(),
+      payload_mapping: Mapping.get_mapping_for_payload()
+    }
     assert {:error,
             %ExOpenTravel.Error{
               reason:
@@ -807,6 +818,6 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
               ],
               success: false
             }} ==
-             Converter.convert({:ok, "abrakadabra", %{errors: []}}, Mapping.get_mapping_struct())
+             Converter.convert({:ok, "abrakadabra", %{}}, mapping)
   end
 end

@@ -8,8 +8,21 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
       ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Version: ~x"./@Version"os,
       EchoToken: ~x"./@EchoToken"os,
-      TimeStamp: ~x"./@TimeStamp"os,
-      Success: ~x"./*[local-name() = 'Success']/text()"os,
+      TimeStamp: ~x"./@TimeStamp"os
+    ]
+  ]
+
+
+  @success [
+    OTA_HotelRateAmountNotifRS: [
+      ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
+      Success: ~x"./*[local-name() = 'Success']"
+    ]
+  ]
+
+  @errors [
+    OTA_HotelRateAmountNotifRS: [
+      ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Errors: [
         ~x"./*[local-name() = 'Errors']"l,
         Error: [
@@ -18,7 +31,13 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
           Type: ~x"./*[local-name() = 'Error']/@Type"os,
           Code: ~x"./*[local-name() = 'Error']/@Code"os
         ]
-      ],
+      ]
+    ]
+  ]
+
+  @warnings [
+    OTA_HotelRateAmountNotifRS: [
+      ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Warnings: [
         ~x"./*[local-name() = 'Warnings']"l,
         Warning: [
@@ -31,6 +50,13 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
       ]
     ]
   ]
-  def get_mapping_struct, do: @sweet_xpath
+
+  @action :OTA_HotelRateAmountNotifRS
+
+  def get_action_name, do: @action
+  def get_mapping_for_success, do: @success
+  def get_mapping_for_errors, do: @errors
+  def get_mapping_for_warnings, do: @warnings
+  def get_mapping_for_payload, do: @sweet_xpath
   def convert_body(struct), do: Converter.convert(struct, @sweet_xpath)
 end
