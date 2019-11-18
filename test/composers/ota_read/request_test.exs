@@ -5,7 +5,7 @@ defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
 
   alias ExOpenTravel.Composers.OtaRead.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @meta %{
     request: nil,
     response: nil,
@@ -23,7 +23,7 @@ defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
     assert element ==
              {:"ns1:ReadRequests", nil,
               [
-                {:"ns1:HotelReadRequest", %{HotelCode: "2e097d85-9eec-433a-9f0a-dd4f1622501f"},
+                {:"ns1:HotelReadRequest", %{HotelCode: "00000"},
                  nil}
               ]}
   end

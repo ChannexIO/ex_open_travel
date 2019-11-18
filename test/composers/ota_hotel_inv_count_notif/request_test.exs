@@ -5,7 +5,7 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.RequestTest do
 
   alias ExOpenTravel.Composers.OtaHotelInvCountNotif.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @meta %{
     request: nil,
     response: nil,

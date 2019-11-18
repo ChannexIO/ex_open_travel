@@ -5,7 +5,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
 
   alias ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
 
   @meta %{
     request: nil,
@@ -60,7 +60,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
     element |> XmlBuilder.generate()
 
     assert element ==
-             {:"ns1:RuleMessages", %{HotelCode: "2e097d85-9eec-433a-9f0a-dd4f1622501f"},
+             {:"ns1:RuleMessages", %{HotelCode: "00000"},
               [
                 {:"ns1:RuleMessage", nil,
                  [

@@ -54,7 +54,7 @@ defmodule ExOpenTravel.Response.Converter do
 
   defp enrich_warnings(payload, xml, %{action: action, warning_mapping: warning_mapping}) do
     with result <- xmap(xml, warning_mapping),
-         warnings when not is_nil(warnings) <- Map.get(result, action) do
+         %{Warnings: warnings} when not ([] == warnings) <- Map.get(result, action) do
       Map.put(payload, :Warnings, warnings)
     else
       _ -> payload
@@ -63,7 +63,14 @@ defmodule ExOpenTravel.Response.Converter do
 
   defp enrich_warnings(payload, _xml, _mapping), do: payload
 
-  defp get_errors({:error, xml}, %{}) do
-    {:error, xml}
+  defp get_errors(xml, %{action: action, error_mapping: error_mapping}) do
+    result = xmap(xml, error_mapping)
+
+    updated_result =
+      with payload when not is_nil(payload) <- Map.get(result, action) do
+        Map.put(result, :Success, false)
+      else
+        _ -> result
+      end
   end
 end

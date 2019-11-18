@@ -8,7 +8,7 @@ defmodule ExOpenTravel.Request.DocumentTest do
   @endpoint "fake_endpoint"
   @username "USERNAME"
   @password "PASSWORD"
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @credentials %{
     user: @username,
     password: @password,

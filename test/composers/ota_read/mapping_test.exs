@@ -1,7 +1,7 @@
 defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
   use ExUnit.Case
   doctest ExOpenTravel
-  @moduletag :ex_open_travel_response_ota_read
+  @moduletag :ex_open_travel_ota_read_mapping
   import SweetXml
   alias ExOpenTravel.Response.Converter
   alias ExOpenTravel.Composers.OtaRead.Mapping
@@ -781,7 +781,8 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
       EchoToken: "echo-abc123",
       TimeStamp: "2005-08-01T09:32:47+08:00",
       Version: "1.0"
-    }
+    },
+  Success: true
   }
 
   test "convert success" do

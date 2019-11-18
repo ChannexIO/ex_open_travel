@@ -12,7 +12,6 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
     ]
   ]
 
-
   @success [
     OTA_HotelRateAmountNotifRS: [
       ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
@@ -24,13 +23,10 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
     OTA_HotelRateAmountNotifRS: [
       ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Errors: [
-        ~x"./*[local-name() = 'Errors']"l,
-        Error: [
-          ~x"./*[local-name() = 'Error']"l,
-          Error: ~x"./text()"os,
-          Type: ~x"./*[local-name() = 'Error']/@Type"os,
-          Code: ~x"./*[local-name() = 'Error']/@Code"os
-        ]
+        ~x"./*[local-name() = 'Errors']/*[local-name() = 'Error']"l,
+        Error: ~x"./text()"os,
+        Type: ~x"./*[local-name() = 'Error']/@Type"os,
+        Code: ~x"./*[local-name() = 'Error']/@Code"os
       ]
     ]
   ]
@@ -39,14 +35,11 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Mapping do
     OTA_HotelRateAmountNotifRS: [
       ~x"//*[local-name() = 'OTA_HotelRateAmountNotifRS']",
       Warnings: [
-        ~x"./*[local-name() = 'Warnings']"l,
-        Warning: [
-          ~x"./*[local-name() = 'Warning']"l,
-          Warning: ~x"./text()"s,
-          Type: ~x"./@Type"os,
-          Code: ~x"./@Code"os,
-          RecordID: ~x"./@RecordID"os
-        ]
+        ~x"./*[local-name() = 'Warnings']/*[local-name() = 'Warning']"l,
+        Warning: ~x"./text()"s,
+        Type: ~x"./@Type"os,
+        Code: ~x"./@Code"os,
+        RecordID: ~x"./@RecordID"os
       ]
     ]
   ]
