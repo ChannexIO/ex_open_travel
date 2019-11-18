@@ -1,7 +1,7 @@
 defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
   use ExUnit.Case
   doctest ExOpenTravel
-  @moduletag :ex_open_travel_request_ota_read
+  @moduletag :ex_open_travel_ota_read_request
 
   alias ExOpenTravel.Composers.OtaRead.Request
 
