@@ -46,44 +46,37 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.Request do
   end
 
   def build_hotel_res_notif(%{hotel_reservations: hotel_reservations}, meta) do
-    hotel_reservations_elements =
-      hotel_reservations
-      |> Enum.map(fn %{
-                       unique_id: unique_id,
-                       res_global_info: res_global_info
-                     } ->
-        {:"ns1:HotelReservation", nil,
-         [
-           build_unique_id(unique_id),
-           build_res_global_info(res_global_info)
-         ]}
-      end)
+    hotel_reservations_elements = Enum.map(hotel_reservations, &build_hotel_reservation/1)
 
     {{:"ns1:HotelReservations", nil, hotel_reservations_elements}, meta}
   end
 
-  def build_unique_id(%{type: type, id_context: id_context, id: id}) do
+  defp build_hotel_reservation(%{unique_id: unique_id, res_global_info: res_global_info}) do
+    {:"ns1:HotelReservation", nil,
+     [build_unique_id(unique_id), build_res_global_info(res_global_info)]}
+  end
+
+  defp build_unique_id(%{type: type, id_context: id_context, id: id}) do
     {:"ns1:UniqueID", %{Type: type, ID_Context: id_context, ID: id}, nil}
   end
 
-  def build_res_global_info(%{hotel_reservation_ids: hotel_reservation_ids}) do
+  defp build_res_global_info(%{hotel_reservation_ids: hotel_reservation_ids}) do
     {:"ns1:ResGlobalInfo", nil,
-     [
-       {:"ns1:HotelReservationIDs", nil,
-        Enum.map(hotel_reservation_ids, fn %{
-                                             res_id_type: res_id_type,
-                                             res_id_value: res_id_value,
-                                             res_id_source: res_id_source,
-                                             res_id_source_context: res_id_source_context
-                                           } ->
-          {:"ns1:HotelReservationID",
-           %{
-             ResID_Type: res_id_type,
-             ResID_Value: res_id_value,
-             ResID_Source: res_id_source,
-             ResID_SourceContext: res_id_source_context
-           }, nil}
-        end)}
-     ]}
+     [{:"ns1:HotelReservationIDs", nil, Enum.map(hotel_reservation_ids, &hotel_reservation_id/1)}]}
+  end
+
+  defp hotel_reservation_id(%{
+         res_id_type: res_id_type,
+         res_id_value: res_id_value,
+         res_id_source: res_id_source,
+         res_id_source_context: res_id_source_context
+       }) do
+    {:"ns1:HotelReservationID",
+     %{
+       ResID_Type: res_id_type,
+       ResID_Value: res_id_value,
+       ResID_Source: res_id_source,
+       ResID_SourceContext: res_id_source_context
+     }, nil}
   end
 end

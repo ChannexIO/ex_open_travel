@@ -40,19 +40,19 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
   end
 
   def build_hotel_inv_count_notif(%{hotel_code: hotel_code, inventories: inventories}, meta) do
-    inventories_elements =
-      inventories
-      |> Enum.map(fn %{
-                       status_application_control: status_application_control,
-                       inv_counts: inv_counts
-                     } ->
-        {:"ns1:Inventory", nil,
-         [
-           Helpers.build_status_application_control(status_application_control, nil),
-           Helpers.build_inv_counts(inv_counts)
-         ]}
-      end)
+    inventories_elements = Enum.map(inventories, &build_inventory/1)
 
     {{:"ns1:Inventories", %{HotelCode: "#{hotel_code}"}, inventories_elements}, meta}
+  end
+
+  defp build_inventory(%{
+         status_application_control: status_application_control,
+         inv_counts: inv_counts
+       }) do
+    {:"ns1:Inventory", nil,
+     [
+       Helpers.build_status_application_control(status_application_control, nil),
+       Helpers.build_inv_counts(inv_counts)
+     ]}
   end
 end
