@@ -10,11 +10,12 @@ defmodule ExOpenTravel.Request.PCIProxies.PCIBookingTest do
   @pci @meta.pci
 
   test "success parse_headers" do
-    assert {:ok, @pci} = PCIBooking.parse_headers(@meta)
+    assert {:ok, @pci} = PCIBooking.parse_headers(@meta, "X-VERTICALBOOKINGFETCHCC")
   end
 
   test "fail parse_headers" do
-    assert {:error, %{success: false}} = PCIBooking.parse_headers(Map.delete(@meta, :headers))
+    assert {:error, %{success: false}} =
+             PCIBooking.parse_headers(Map.delete(@meta, :headers), "X-VERTICALBOOKINGFETCHCC")
   end
 
   test "success convert_token_headers when empty" do
