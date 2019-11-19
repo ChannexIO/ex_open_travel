@@ -1,5 +1,6 @@
 defmodule ExOpenTravel.Composers.OtaRead.Request do
   alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request
   alias ExOpenTravel.Request.PCIProxies.PCIBooking
   alias ExOpenTravel.Request.{Document}
   @action "OTA_Read"
@@ -10,11 +11,18 @@ defmodule ExOpenTravel.Composers.OtaRead.Request do
   This method is used to update availability.
   """
   @spec execute(%{hotel_code: String.t()}, credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
-  def execute(%{hotel_code: _} = params, credentials, meta) do
+  def execute(%{hotel_code: _} = params, %{pci_proxy: :pci_booking} = credentials, meta) do
     params
     |> build_read(meta)
     |> Document.build(@action, credentials)
     |> PCIBooking.proxy_send(credentials)
+  end
+
+  def execute(%{hotel_code: _} = params, credentials, meta) do
+    params
+    |> build_read(meta)
+    |> Document.build(@action, credentials)
+    |> Request.send(credentials)
   end
 
   @spec build_read(%{hotel_code: String.t()}, Meta.t()) :: {{atom(), map | nil, list | nil}, Meta.t()}

@@ -6,15 +6,15 @@ defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
   @spec proxy_send({String.t(), map()}, map()) :: {:ok, map(), map()} | {:error, map(), map()}
   def proxy_send({document, %{success: true} = meta}, %{
         endpoint: endpoint,
-        pci_booking_fetch_header: pci_booking_fetch_header,
-        pci_booking_profile_name: pci_booking_profile_name,
-        api_key: api_key
+        pci_booking_fetch_header: fetch_header,
+        pci_booking_profile_name: profile_name,
+        pci_booking_api_key: api_key
       }) do
     with {:ok, temp_session} <- start_temporary_session(api_key),
-         url <- get_tokenized_booking_url(endpoint, temp_session, pci_booking_profile_name),
+         url <- get_tokenized_booking_url(endpoint, temp_session, profile_name),
          {:ok, response, meta} <- send_request(url, {document, meta}, api_key) do
       pci =
-        with {:ok, meta} <- parse_headers(meta, pci_booking_fetch_header),
+        with {:ok, meta} <- parse_headers(meta, fetch_header),
              {:ok, pci} <- convert_token_headers(meta) do
           pci
         end
@@ -29,7 +29,7 @@ defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
       |> Helpers.update_meta_if_unfounded(credentials, :endpoint)
       |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_fetch_header)
       |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_profile_name)
-      |> Helpers.update_meta_if_unfounded(credentials, :api_key)
+      |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_api_key)
       |> Map.put(:success, false)
 
     Request.send({document, updated_meta}, credentials)
@@ -51,11 +51,11 @@ defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
     end
   end
 
-  defp get_tokenized_booking_url(endpoint, temp_session, pci_booking_profile_name) do
+  defp get_tokenized_booking_url(endpoint, temp_session, profile_name) do
     get_url("/payments/paycard/capture",
       sessionToken: temp_session,
       httpMethod: "POST",
-      profileName: pci_booking_profile_name,
+      profileName: profile_name,
       targetURI: endpoint,
       saveCVV: true
     )
@@ -65,19 +65,19 @@ defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
     Request.send(body, %{endpoint: "#{@api_endpoint}#{url}"}, headers(api_key))
   end
 
-  def parse_headers(%{headers: headers}, pci_booking_fetch_header) do
+  def parse_headers(%{headers: headers}, fetch_header) do
     {
       :ok,
       # The direction of the headers sequence is critical!
       %{
-        tokens: headers |> get_from(pci_booking_fetch_header) |> split(";"),
+        tokens: headers |> get_from(fetch_header) |> split(";"),
         errors: headers |> get_from("X-pciBooking-Tokenization-Errors") |> split(";;"),
         warnings: headers |> get_from("X-pciBooking-Tokenization-Warnings") |> split(";;")
       }
     }
   end
 
-  def parse_headers(meta, _pci_booking_fetch_header) do
+  def parse_headers(meta, _fetch_header) do
     errors = Map.get(meta, :errors) || []
 
     {:error,

@@ -184,6 +184,31 @@ defmodule ExOpenTravel do
 
   @doc """
   This method is retrieve reservations for property.
+  Credential need contain fields: `endpoint, user, password`
+  ## Examples
+
+      iex> ExOpenTravel.ota_read(%{hotel_code: "123456"},
+                                 %{endpoint: "https://pms.otachannel.com/requestor_id/OTA_PMS.php",
+                                   password: "123456789",
+                                   user: "987654321"}
+                                 )
+      {:ok, %{}, %{}}
+
+
+  Also if you need request tokenization on PCI_Booking,
+  credential should include `pci_proxy: :pci_booking`
+    ## Examples
+
+      iex> ExOpenTravel.ota_read(%{hotel_code: "123456"},
+                                 %{endpoint: "https://pms.otachannel.com/requestor_id/OTA_PMS.php",
+                                   password: "123456789",
+                                   user: "987654321",
+                                   pci_pci_proxy: :pci_booking,
+                                   pci_booking_fetch_header: "X-OTACHANNELFETCHCC",
+                                   pci_booking_profile_name: "ConcreteOpenTravelProfile",
+                                   pci_booking_api_key: "00000000000000000000000000000000"}
+                                 )
+      {:ok, %{}, %{}}
   """
   @spec ota_read(%{hotel_code: String.t()}, credentials, map()) ::
           {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
