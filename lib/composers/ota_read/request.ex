@@ -2,7 +2,7 @@ defmodule ExOpenTravel.Composers.OtaRead.Request do
   alias ExOpenTravel.Meta
   alias ExOpenTravel.Request
   alias ExOpenTravel.Request.PCIProxies.PCIBooking
-  alias ExOpenTravel.Request.{Document}
+  alias ExOpenTravel.Request.Document
   @action "OTA_Read"
 
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}

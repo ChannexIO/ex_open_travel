@@ -1,7 +1,7 @@
 defmodule ExOpenTravel.Composers.OtaHotelResNotif.Request do
   alias ExOpenTravel.Meta
   alias ExOpenTravel.Request
-  alias ExOpenTravel.Request.{Document}
+  alias ExOpenTravel.Request.Document
 
   @action "OTA_HotelResNotif"
 

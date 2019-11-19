@@ -8,6 +8,7 @@ defmodule ExOpenTravel do
     OtaHotelInvCountNotif,
     OtaHotelRateAmountNotif,
     OtaHotelResNotif,
+    OtaHotelAvailQuery,
     OtaPing,
     OtaRead
   }
@@ -16,6 +17,7 @@ defmodule ExOpenTravel do
   alias ExOpenTravel.Response
 
   @type credentials :: %{endpoint: String.t(), password: String.t(), user: String.t()}
+  @type response :: {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
 
   @doc """
     Ping message
@@ -27,21 +29,11 @@ defmodule ExOpenTravel do
 
     ExOpenTravel.ota_ping()
   """
-  @spec ota_ping(credentials, map()) :: {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @spec ota_ping(credentials, map()) :: response()
   def ota_ping(credentials, customization \\ %{})
 
   def ota_ping(credentials, customization) do
-    response_mapping =
-      Map.merge(
-        %{
-          action: OtaPing.Mapping.get_action_name(),
-          success_mapping: OtaPing.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaPing.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaPing.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaPing.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+    response_mapping = OtaPing |> get_default_mapping() |> Map.merge(customization)
 
     credentials
     |> OtaPing.Request.execute(prepare_meta())
@@ -51,8 +43,7 @@ defmodule ExOpenTravel do
   @doc """
   This method is used to update availability.
   """
-  @spec ota_hotel_inv_count_notif(OtaHotelInvCountNotif.t(), credentials, map()) ::
-          {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @spec ota_hotel_inv_count_notif(OtaHotelInvCountNotif.t(), credentials, map()) :: response()
   def ota_hotel_inv_count_notif(params, credentials, customization \\ %{})
 
   def ota_hotel_inv_count_notif(
@@ -60,17 +51,7 @@ defmodule ExOpenTravel do
         credentials,
         customization
       ) do
-    response_mapping =
-      Map.merge(
-        %{
-          action: OtaHotelInvCountNotif.Mapping.get_action_name(),
-          success_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaHotelInvCountNotif.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+    response_mapping = OtaHotelInvCountNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
     |> OtaHotelInvCountNotif.Request.execute(credentials, prepare_meta())
@@ -80,8 +61,7 @@ defmodule ExOpenTravel do
   @doc """
   This method is used to update rates (per room prices).
   """
-  @spec ota_hotel_rate_amount_notif(OtaHotelRateAmountNotif.t(), credentials, map()) ::
-          {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @spec ota_hotel_rate_amount_notif(OtaHotelRateAmountNotif.t(), credentials, map()) :: response()
   def ota_hotel_rate_amount_notif(params, credentials, customization \\ %{})
 
   def ota_hotel_rate_amount_notif(
@@ -90,16 +70,7 @@ defmodule ExOpenTravel do
         customization
       ) do
     response_mapping =
-      Map.merge(
-        %{
-          action: OtaHotelRateAmountNotif.Mapping.get_action_name(),
-          success_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaHotelRateAmountNotif.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+      OtaHotelRateAmountNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
     |> OtaHotelRateAmountNotif.Request.execute(credentials, prepare_meta())
@@ -110,7 +81,7 @@ defmodule ExOpenTravel do
   This method is used to update booking rule.
   """
   @spec ota_hotel_booking_rule_notif(OtaHotelBookingRuleNotif.t(), credentials, map()) ::
-          {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+          response()
   def ota_hotel_booking_rule_notif(params, credentials, customization \\ %{})
 
   def ota_hotel_booking_rule_notif(
@@ -119,16 +90,7 @@ defmodule ExOpenTravel do
         customization
       ) do
     response_mapping =
-      Map.merge(
-        %{
-          action: OtaHotelBookingRuleNotif.Mapping.get_action_name(),
-          success_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaHotelBookingRuleNotif.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+      OtaHotelBookingRuleNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
     |> OtaHotelBookingRuleNotif.Request.execute(credentials, prepare_meta())
@@ -138,22 +100,11 @@ defmodule ExOpenTravel do
   @doc """
   This method is used for booking confirmation.
   """
-  @spec ota_hotel_res_notif(list(), credentials, map()) ::
-          {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @spec ota_hotel_res_notif(OtaHotelResNotif.t(), credentials, map()) :: response()
   def ota_hotel_res_notif(booking_ids, credentials, customization \\ %{})
 
   def ota_hotel_res_notif(booking_ids, credentials, customization) do
-    response_mapping =
-      Map.merge(
-        %{
-          action: OtaHotelResNotif.Mapping.get_action_name(),
-          success_mapping: OtaHotelResNotif.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaHotelResNotif.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaHotelResNotif.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaHotelResNotif.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+    response_mapping = OtaHotelResNotif |> get_default_mapping() |> Map.merge(customization)
 
     %{
       hotel_reservations:
@@ -210,26 +161,41 @@ defmodule ExOpenTravel do
                                  )
       {:ok, %{}, %{}}
   """
-  @spec ota_read(%{hotel_code: String.t()}, credentials, map()) ::
-          {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @spec ota_read(OtaRead.t(), credentials, map()) :: response()
   def ota_read(params, credentials, customization \\ %{})
 
   def ota_read(%{hotel_code: _} = params, credentials, customization) do
-    response_mapping =
-      Map.merge(
-        %{
-          action: OtaRead.Mapping.get_action_name(),
-          success_mapping: OtaRead.Mapping.get_mapping_for_success(),
-          warning_mapping: OtaRead.Mapping.get_mapping_for_warnings(),
-          error_mapping: OtaRead.Mapping.get_mapping_for_errors(),
-          payload_mapping: OtaRead.Mapping.get_mapping_for_payload()
-        },
-        customization
-      )
+    response_mapping = OtaRead |> get_default_mapping() |> Map.merge(customization)
 
     params
     |> OtaRead.Request.execute(credentials, prepare_meta())
     |> Response.parse_response(response_mapping)
+  end
+
+  @doc """
+  This method is used to Availability querying
+  """
+  @spec ota_hotel_avail_query(OtaHotelAvailQuery.t(), credentials, map()) :: response()
+  def ota_hotel_avail_query(params, credentials, customization \\ %{})
+
+  def ota_hotel_avail_query(%{hotel_code: _} = params, credentials, customization) do
+    response_mapping = OtaHotelAvailQuery |> get_default_mapping() |> Map.merge(customization)
+
+    params
+    |> OtaHotelAvailQuery.Request.execute(credentials, prepare_meta())
+    |> Response.parse_response(response_mapping)
+  end
+
+  defp get_default_mapping(module) do
+    node = Node.self()
+
+    %{
+      action: :rpc.call(node, :"#{module}.Mapping", :get_action_name, []),
+      success_mapping: :rpc.call(node, :"#{module}.Mapping", :get_mapping_for_success, []),
+      warning_mapping: :rpc.call(node, :"#{module}.Mapping", :get_mapping_for_warnings, []),
+      error_mapping: :rpc.call(node, :"#{module}.Mapping", :get_mapping_for_errors, []),
+      payload_mapping: :rpc.call(node, :"#{module}.Mapping", :get_mapping_for_payload, [])
+    }
   end
 
   defp prepare_meta() do
