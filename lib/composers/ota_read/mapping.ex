@@ -4,16 +4,13 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
   import SweetXml
 
   @taxes_type [
-    ~x"./*[local-name() = 'Taxes']"ol,
-    Tax: [
-      ~x"./*[local-name() = 'Tax']"o,
-      Code: ~x"./@Code"os,
-      Percentage: ~x"./@Percentage"os,
-      Amount: ~x"./@Amount"os,
-      TaxDescription: [
-        ~x"./*[local-name() = 'TaxDescription']"o,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ]
+    ~x"./*[local-name() = 'Taxes']/*[local-name() = 'Tax']"ol,
+    Code: ~x"./@Code"os,
+    Percentage: ~x"./@Percentage"os,
+    Amount: ~x"./@Amount"os,
+    TaxDescription: [
+      ~x"./*[local-name() = 'TaxDescription']"o,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
@@ -26,31 +23,28 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
   ]
 
   @services_type [
-    ~x"./*[local-name() = 'Services']"ol,
-    Service: [
-      ~x"./*[local-name() = 'Service']"o,
-      ServiceInventoryCode: ~x"./@ServiceInventoryCode"os,
-      ServiceRPH: ~x"./@ServiceRPH"os,
-      Inclusive: ~x"./@Inclusive"os,
-      Quantity: ~x"./@Quantity"os,
-      ID: ~x"./@ID"os,
-      ID_Context: ~x"./@ID_Context"os,
-      Type: ~x"./@Type"os,
-      Price: [
-        ~x"./*[local-name() = 'Price']"o,
-        Total: @total_type,
-        RateDescription: [
-          ~x"./*[local-name() = 'DetailDescription']"o,
-          Text: ~x"./*[local-name() = 'Text']/text()"os
-        ]
-      ],
-      ServiceDetails: [
-        ~x"./*[local-name() = 'ServiceDetails']"o,
-        TimeSpan: [
-          ~x"./*[local-name() = 'TimeSpan']"o,
-          Start: ~x"./@Start"os,
-          End: ~x"./@End"os
-        ]
+    ~x"./*[local-name() = 'Services']/*[local-name() = 'Service']"ol,
+    ServiceInventoryCode: ~x"./@ServiceInventoryCode"os,
+    ServiceRPH: ~x"./@ServiceRPH"os,
+    Inclusive: ~x"./@Inclusive"os,
+    Quantity: ~x"./@Quantity"os,
+    ID: ~x"./@ID"os,
+    ID_Context: ~x"./@ID_Context"os,
+    Type: ~x"./@Type"os,
+    Price: [
+      ~x"./*[local-name() = 'Price']"o,
+      Total: @total_type,
+      RateDescription: [
+        ~x"./*[local-name() = 'DetailDescription']"o,
+        Text: ~x"./*[local-name() = 'Text']/text()"os
+      ]
+    ],
+    ServiceDetails: [
+      ~x"./*[local-name() = 'ServiceDetails']"o,
+      TimeSpan: [
+        ~x"./*[local-name() = 'TimeSpan']"o,
+        Start: ~x"./@Start"os,
+        End: ~x"./@End"os
       ]
     ]
   ]
@@ -107,41 +101,35 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
   @guarantee_type [
     ~x"./*[local-name() = 'Guarantee']"o,
     GuaranteesAccepted: [
-      ~x"./*[local-name() = 'GuaranteesAccepted']"ol,
-      GuaranteeAccepted: [
-        ~x"./*[local-name() = 'GuaranteeAccepted']"o,
-        PaymentCard: [
-          ~x"./*[local-name() = 'PaymentCard']"o,
-          CardCode: ~x"./@CardCode"os,
-          CardType: ~x"./@CardType"os,
-          CardNumber: ~x"./@CardNumber"os,
-          ExpireDate: ~x"./@ExpireDate"os,
-          MaskedCardNumber: ~x"./@MaskedCardNumber"os,
-          CardHolderName: ~x"./*[local-name() = 'CardHolderName']/text()"os,
-          ThreeDomainSecurity: [
-            ~x"./*[local-name() = 'ThreeDomainSecurity']"o,
-            Results: [
-              ~x"./*[local-name() = 'Results']"o,
-              ThreeDSVersion: ~x"./@ThreeDSVersion"os,
-              ECI: ~x"./@ECI"os,
-              CAVV: ~x"./@CAVV"os,
-              PAResStatus: ~x"./@PAResStatus"os,
-              SignatureVerification: ~x"./@SignatureVerification"os,
-              XID: ~x"./@XID"os,
-              Enrolled: ~x"./@Enrolled"os,
-              DSTransactionID: ~x"./@DSTransactionID"os
-            ]
+      ~x"./*[local-name() = 'GuaranteesAccepted']/*[local-name() = 'GuaranteeAccepted']"ol,
+      PaymentCard: [
+        ~x"./*[local-name() = 'PaymentCard']"o,
+        CardCode: ~x"./@CardCode"os,
+        CardType: ~x"./@CardType"os,
+        CardNumber: ~x"./@CardNumber"os,
+        ExpireDate: ~x"./@ExpireDate"os,
+        MaskedCardNumber: ~x"./@MaskedCardNumber"os,
+        CardHolderName: ~x"./*[local-name() = 'CardHolderName']/text()"os,
+        ThreeDomainSecurity: [
+          ~x"./*[local-name() = 'ThreeDomainSecurity']"o,
+          Results: [
+            ~x"./*[local-name() = 'Results']"o,
+            ThreeDSVersion: ~x"./@ThreeDSVersion"os,
+            ECI: ~x"./@ECI"os,
+            CAVV: ~x"./@CAVV"os,
+            PAResStatus: ~x"./@PAResStatus"os,
+            SignatureVerification: ~x"./@SignatureVerification"os,
+            XID: ~x"./@XID"os,
+            Enrolled: ~x"./@Enrolled"os,
+            DSTransactionID: ~x"./@DSTransactionID"os
           ]
         ]
       ]
     ],
     Comments: [
-      ~x"./*[local-name() = 'Comments']"ol,
-      Comment: [
-        ~x"./*[local-name() = 'Comment']"ol,
-        Name: ~x"./@Name"os,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ]
+      ~x"./*[local-name() = 'Comments']/*[local-name() = 'Comment']"ol,
+      Name: ~x"./@Name"os,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ],
     GuaranteeDescription: [
       ~x"./*[local-name() = 'GuaranteeDescription']"ol,
@@ -150,184 +138,136 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
   ]
 
   @res_guests_type [
-    ~x"./*[local-name() = 'ResGuests']"ol,
-    ResGuest: [
-      ~x"./*[local-name() = 'ResGuest']"o,
-      ResGuestRPH: ~x"./@ResGuestRPH"os,
-      ArrivalTime: ~x"./@ArrivalTime"os,
-      Age: ~x"./@Age"os,
-      PrimaryIndicator: ~x"./@PrimaryIndicator"os,
-      Profiles: @profiles_type,
-      Comments: [
-        ~x"./*[local-name() = 'Comments']"ol,
-        Comment: [
-          ~x"./*[local-name() = 'Comment']"ol,
-          Name: ~x"./@Name"os,
-          Text: ~x"./*[local-name() = 'Text']/text()"os
-        ]
-      ]
+    ~x"./*[local-name() = 'ResGuests']/*[local-name() = 'ResGuest']"ol,
+    ResGuestRPH: ~x"./@ResGuestRPH"os,
+    ArrivalTime: ~x"./@ArrivalTime"os,
+    Age: ~x"./@Age"os,
+    PrimaryIndicator: ~x"./@PrimaryIndicator"os,
+    Profiles: @profiles_type,
+    Comments: [
+      ~x"./*[local-name() = 'Comments']/*[local-name() = 'Comment']"ol,
+      Name: ~x"./@Name"os,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
   @additional_details_type [
-    ~x"./*[local-name() = 'AdditionalDetails']"ol,
-    AdditionalDetail: [
-      ~x"./*[local-name() = 'AdditionalDetail']"o,
-      Type: ~x"./@Type"os,
-      DetailDescription: [
-        ~x"./*[local-name() = 'DetailDescription']"o,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ]
+    ~x"./*[local-name() = 'AdditionalDetails']/*[local-name() = 'AdditionalDetail']"ol,
+    Type: ~x"./@Type"os,
+    DetailDescription: [
+      ~x"./*[local-name() = 'DetailDescription']"o,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
   @room_rates_type [
-    ~x"./*[local-name() = 'RoomRates']"ol,
-    RoomRate: [
-      ~x"./*[local-name() = 'RoomRate']"o,
-      RoomTypeCode: ~x"./@RoomTypeCode"os,
-      NumberOfUnits: ~x"./@NumberOfUnits"os,
-      RatePlanCode: ~x"./@RatePlanCode"os,
-      Rates: [
-        ~x"./*[local-name() = 'Rates']"ol,
-        Rate: [
-          ~x"./*[local-name() = 'Rate']"o,
-          RateTimeUnit: ~x"./@RateTimeUnit"os,
-          EffectiveDate: ~x"./@EffectiveDate"os,
-          ExpireDate: ~x"./@ExpireDate"os,
-          UnitMultiplier: ~x"./@UnitMultiplier"os,
-          Base: @total_type,
-          Total: @total_type
-        ]
-      ],
-      ServiceRPHs: [
-        ~x"./*[local-name() = 'ServiceRPHs']"ol,
-        ServiceRPH: [
-          ~x"./*[local-name() = 'ServiceRPH']"o,
-          RPH: ~x"./@RPH"os
-        ]
-      ]
+    ~x"./*[local-name() = 'RoomRates']/*[local-name() = 'RoomRate']"ol,
+    RoomTypeCode: ~x"./@RoomTypeCode"os,
+    NumberOfUnits: ~x"./@NumberOfUnits"os,
+    RatePlanCode: ~x"./@RatePlanCode"os,
+    Rates: [
+      ~x"./*[local-name() = 'Rates']/*[local-name() = 'Rate']"ol,
+      RateTimeUnit: ~x"./@RateTimeUnit"os,
+      EffectiveDate: ~x"./@EffectiveDate"os,
+      ExpireDate: ~x"./@ExpireDate"os,
+      UnitMultiplier: ~x"./@UnitMultiplier"os,
+      Base: @total_type,
+      Total: @total_type
+    ],
+    ServiceRPHs: [
+      ~x"./*[local-name() = 'ServiceRPHs']/*[local-name() = 'ServiceRPH']"ol,
+      RPH: ~x"./@RPH"os
     ]
   ]
 
   @room_types_type [
-    ~x"./*[local-name() = 'RoomTypes']"ol,
-    RoomType: [
-      ~x"./*[local-name() = 'RoomType']"o,
-      RoomType: ~x"./@RoomType"os,
-      RoomTypeCode: ~x"./@RoomTypeCode"os,
-      NonSmoking: ~x"./@NonSmoking"os,
-      Configuration: ~x"./@Configuration"os,
-      RoomDescription: [
-        ~x"./*[local-name() = 'RoomDescription']"o,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ],
-      AdditionalDetails: @additional_details_type
-    ]
+    ~x"./*[local-name() = 'RoomTypes']/*[local-name() = 'RoomType']"ol,
+    RoomType: ~x"./@RoomType"os,
+    RoomTypeCode: ~x"./@RoomTypeCode"os,
+    NonSmoking: ~x"./@NonSmoking"os,
+    Configuration: ~x"./@Configuration"os,
+    RoomDescription: [
+      ~x"./*[local-name() = 'RoomDescription']"o,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
+    ],
+    AdditionalDetails: @additional_details_type
   ]
 
   @rate_plans_type [
-    ~x"./*[local-name() = 'RatePlans']"ol,
-    RatePlan: [
-      ~x"./*[local-name() = 'RatePlan']"o,
-      RatePlanCode: ~x"./@RatePlanCode"os,
-      RatePlanName: ~x"./@RatePlanName"os,
-      EffectiveDate: ~x"./@EffectiveDate"os,
-      ExpireDate: ~x"./@ExpireDate"os,
-      RateDescription: [
-        ~x"./*[local-name() = 'RateDescription']"o,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ],
-      AdditionalDetails: @additional_details_type
-    ]
+    ~x"./*[local-name() = 'RatePlans']/*[local-name() = 'RatePlan']"ol,
+    RatePlanCode: ~x"./@RatePlanCode"os,
+    RatePlanName: ~x"./@RatePlanName"os,
+    EffectiveDate: ~x"./@EffectiveDate"os,
+    ExpireDate: ~x"./@ExpireDate"os,
+    RateDescription: [
+      ~x"./*[local-name() = 'RateDescription']"o,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
+    ],
+    AdditionalDetails: @additional_details_type
   ]
 
   @room_stays_type [
-    ~x"./*[local-name() = 'RoomStays']"ol,
-    RoomStay: [
-      ~x"./*[local-name() = 'RoomStay']"o,
-      MarketCode: ~x"./@MarketCode"os,
-      PromotionCode: ~x"./@PromotionCode"os,
-      SourceOfBusiness: ~x"./@SourceOfBusiness"os,
-      RoomTypes: @room_types_type,
-      RatePlans: @rate_plans_type,
-      RoomRates: @room_rates_type,
-      GuestCounts: [
-        ~x"./*[local-name() = 'GuestCounts']"ol,
-        GuestCount: [
-          ~x"./*[local-name() = 'GuestCount']"o,
-          AgeQualifyingCode: ~x"./@AgeQualifyingCode"os,
-          Count: ~x"./@Count"os
-        ]
-      ],
-      TimeSpan: [
-        ~x"./*[local-name() = 'TimeSpan']"o,
-        Start: ~x"./@Start"os,
-        End: ~x"./@End"os
-      ],
-      Total: @total_type,
-      BasicPropertyInfo: [
-        ~x"./*[local-name() = 'BasicPropertyInfo']"o,
-        HotelCode: ~x"./@HotelCode"os
-      ],
-      ServiceRPHs: [
-        ~x"./*[local-name() = 'ServiceRPHs']"ol,
-        ServiceRPH: [
-          ~x"./*[local-name() = 'ServiceRPH']"o,
-          RPH: ~x"./@RPH"os
-        ]
-      ],
-      ResGuestRPHs: [
-        ~x"./*[local-name() = 'ResGuestRPHs']"ol,
-        ResGuestRPH: [
-          ~x"./*[local-name() = 'ResGuestRPH']"o,
-          RPH: ~x"./@RPH"os
-        ]
-      ],
-      Comments: [
-        ~x"./*[local-name() = 'Comments']"ol,
-        Comment: [
-          ~x"./*[local-name() = 'Comment']"ol,
-          Text: ~x"./*[local-name() = 'Text']/text()"os
-        ]
-      ]
+    ~x"./*[local-name() = 'RoomStays']/*[local-name() = 'RoomStay']"ol,
+    MarketCode: ~x"./@MarketCode"os,
+    PromotionCode: ~x"./@PromotionCode"os,
+    SourceOfBusiness: ~x"./@SourceOfBusiness"os,
+    RoomTypes: @room_types_type,
+    RatePlans: @rate_plans_type,
+    RoomRates: @room_rates_type,
+    GuestCounts: [
+      ~x"./*[local-name() = 'GuestCounts']/*[local-name() = 'GuestCount']"ol,
+      AgeQualifyingCode: ~x"./@AgeQualifyingCode"os,
+      Count: ~x"./@Count"os
+    ],
+    TimeSpan: [
+      ~x"./*[local-name() = 'TimeSpan']"o,
+      Start: ~x"./@Start"os,
+      End: ~x"./@End"os
+    ],
+    Total: @total_type,
+    BasicPropertyInfo: [
+      ~x"./*[local-name() = 'BasicPropertyInfo']"o,
+      HotelCode: ~x"./@HotelCode"os
+    ],
+    ServiceRPHs: [
+      ~x"./*[local-name() = 'ServiceRPHs']/*[local-name() = 'ServiceRPH']"ol,
+      RPH: ~x"./@RPH"os
+    ],
+    ResGuestRPHs: [
+      ~x"./*[local-name() = 'ResGuestRPHs']/*[local-name() = 'ResGuestRPH']"ol,
+      RPH: ~x"./@RPH"os
+    ],
+    Comments: [
+      ~x"./*[local-name() = 'Comments']/*[local-name() = 'Comment']"ol,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
   @res_global_info_type [
     ~x"./*[local-name() = 'ResGlobalInfo']"o,
     HotelReservationIDs: [
-      ~x"./*[local-name() = 'HotelReservationIDs']"ol,
-      HotelReservationID: [
-        ~x"./*[local-name() = 'HotelReservationID']"o,
-        ResID_Type: ~x"./@ResID_Type"os,
-        ResID_Value: ~x"./@ResID_Value"os
-      ]
+      ~x"./*[local-name() = 'HotelReservationIDs']/*[local-name() = 'HotelReservationID']"ol,
+      ResID_Type: ~x"./@ResID_Type"os,
+      ResID_Value: ~x"./@ResID_Value"os
     ],
     Total: @total_type,
     Profiles: @profiles_type,
     Memberships: [
-      ~x"./*[local-name() = 'Memberships']"ol,
-      Membership: [
-        ~x"./*[local-name() = 'Membership']"ol,
-        ProgramCode: ~x"./@ProgramCode"os,
-        AccountID: ~x"./@AccountID"os
-      ]
+      ~x"./*[local-name() = 'Memberships']/*[local-name() = 'Membership']"ol,
+      ProgramCode: ~x"./@ProgramCode"os,
+      AccountID: ~x"./@AccountID"os
     ],
     Fees: [
-      ~x"./*[local-name() = 'Fees']"ol,
-      Fee: [
-        ~x"./*[local-name() = 'Fee']"ol,
-        TaxInclusive: ~x"./@TaxInclusive"os,
-        Type: ~x"./@Type"os,
-        Code: ~x"./@Code"os,
-        Amount: ~x"./@Amount"os,
-        Taxes: @taxes_type,
-        Description: [
-          ~x"./*[local-name() = 'Description']"o,
-          Name: ~x"./@Name"os,
-          Text: ~x"./*[local-name() = 'Text']/text()"os
-        ]
+      ~x"./*[local-name() = 'Fees']/*[local-name() = 'Fee']"ol,
+      TaxInclusive: ~x"./@TaxInclusive"os,
+      Type: ~x"./@Type"os,
+      Code: ~x"./@Code"os,
+      Amount: ~x"./@Amount"os,
+      Taxes: @taxes_type,
+      Description: [
+        ~x"./*[local-name() = 'Description']"o,
+        Name: ~x"./@Name"os,
+        Text: ~x"./*[local-name() = 'Text']/text()"os
       ]
     ],
     DepositPayments: [
@@ -349,11 +289,8 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
     ],
     Guarantee: @guarantee_type,
     Comments: [
-      ~x"./*[local-name() = 'Comments']"ol,
-      Comment: [
-        ~x"./*[local-name() = 'Comment']"ol,
-        Text: ~x"./*[local-name() = 'Text']/text()"os
-      ]
+      ~x"./*[local-name() = 'Comments']/*[local-name() = 'Comment']"ol,
+      Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
