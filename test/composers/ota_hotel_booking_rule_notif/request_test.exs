@@ -57,7 +57,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:RuleMessages", %{HotelCode: "00000"},
@@ -140,7 +140,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
         }
       ])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_booking_rule/1" do
@@ -152,7 +152,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
         restriction_status: nil
       })
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_lengths_of_stay/1" do
@@ -165,7 +165,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
         }
       ])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_restriction_status/1" do
@@ -175,12 +175,12 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
         status: "Close"
       })
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "destination_system_codes/1" do
     element = Request.destination_system_codes([1, 2, 3])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 end

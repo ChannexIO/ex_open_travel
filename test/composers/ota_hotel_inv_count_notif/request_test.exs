@@ -34,7 +34,7 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.RequestTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:Inventories", %{HotelCode: @hotel_code},

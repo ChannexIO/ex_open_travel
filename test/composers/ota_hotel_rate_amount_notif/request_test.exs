@@ -46,7 +46,7 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.RequestTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:RateAmountMessages", %{HotelCode: "00000"},

@@ -16,7 +16,7 @@ defmodule ExOpenTravel.Request.HelpersTest do
         nil
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:StatusApplicationControl",
@@ -35,7 +35,7 @@ defmodule ExOpenTravel.Request.HelpersTest do
         [{"TestOptions", "Test Value"}]
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:StatusApplicationControl",
