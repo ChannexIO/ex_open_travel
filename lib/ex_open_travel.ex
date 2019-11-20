@@ -138,7 +138,7 @@ defmodule ExOpenTravel do
   Credential need contain fields: `endpoint, user, password`
   ## Examples
 
-      iex> ExOpenTravel.ota_read(%{hotel_code: "123456"},
+      iex > ExOpenTravel.ota_read(%{hotel_code: "123456"},
                                  %{endpoint: "https://pms.otachannel.com/requestor_id/OTA_PMS.php",
                                    password: "123456789",
                                    user: "987654321"}
@@ -150,7 +150,7 @@ defmodule ExOpenTravel do
   credential should include `pci_proxy: :pci_booking`
     ## Examples
 
-      iex> ExOpenTravel.ota_read(%{hotel_code: "123456"},
+      iex > ExOpenTravel.ota_read(%{hotel_code: "123456"},
                                  %{endpoint: "https://pms.otachannel.com/requestor_id/OTA_PMS.php",
                                    password: "123456789",
                                    user: "987654321",
