@@ -6,9 +6,9 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.Mapping do
   @sweet_xpath [
     OTA_HotelResNotifRS: [
       ~x"//*[local-name() = 'OTA_HotelResNotifRS']",
-      Version: ~x"./@Version"os,
-      EchoToken: ~x"./@EchoToken"os,
-      TimeStamp: ~x"./@TimeStamp"os
+      "@Version": ~x"./@Version"os,
+      "@EchoToken": ~x"./@EchoToken"os,
+      "@TimeStamp": ~x"./@TimeStamp"os
     ]
   ]
 
@@ -25,8 +25,8 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.Mapping do
       Errors: [
         ~x"./*[local-name() = 'Errors']/*[local-name() = 'Error']"l,
         Error: ~x"./text()"os,
-        Type: ~x"./*[local-name() = 'Error']/@Type"os,
-        Code: ~x"./*[local-name() = 'Error']/@Code"os
+        "@Type": ~x"./@Type"os,
+        "@Code": ~x"./@Code"os
       ]
     ]
   ]
@@ -37,9 +37,9 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.Mapping do
       Warnings: [
         ~x"./*[local-name() = 'Warnings']/*[local-name() = 'Warning']"l,
         Warning: ~x"./text()"s,
-        Type: ~x"./@Type"os,
-        Code: ~x"./@Code"os,
-        RecordID: ~x"./@RecordID"os
+        "@Type": ~x"./@Type"os,
+        "@Code": ~x"./@Code"os,
+        "@RecordID": ~x"./@RecordID"os
       ]
     ]
   ]

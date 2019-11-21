@@ -433,25 +433,25 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
   @message %{
     Success: true,
     OTA_ResRetrieveRS: %{
-      EchoToken: "echo-abc123",
-      TimeStamp: "2005-08-01T09:32:47+08:00",
-      Version: "1.0",
+      "@EchoToken": "echo-abc123",
+      "@TimeStamp": "2005-08-01T09:32:47+08:00",
+      "@Version": "1.0",
       ReservationsList: [
         %{
           HotelReservation: [
             %{
               BasicPropertyInfo: nil,
-              CreateDateTime: "2007-12-09T08:51:45.000+0000",
-              LastModifyDateTime: "",
+              "@CreateDateTime": "2007-12-09T08:51:45.000+0000",
+              "@LastModifyDateTime": "",
               POS: [
                 %{
                   Source: %{
                     BookingChannel: %{
-                      CompanyName: %{Code: "EXP", CompanyName: "Expedia"},
-                      Primary: "true",
-                      Type: "7"
+                      CompanyName: %{"@Code": "EXP", CompanyName: "Expedia"},
+                      "@Primary": "true",
+                      "@Type": "7"
                     },
-                    RequestorID: %{ID: "SITEMINDER", Type: "22"}
+                    RequestorID: %{"@ID": "SITEMINDER", "@Type": "22"}
                   }
                 }
               ],
@@ -462,10 +462,10 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                     GuaranteePayment: [
                       %{
                         AmountPercent: %{
-                          Amount: "291.63",
-                          CurrencyCode: "USD",
-                          Percent: "50",
-                          TaxInclusive: ""
+                          "@Amount": "291.63",
+                          "@CurrencyCode": "USD",
+                          "@Percent": "50",
+                          "@TaxInclusive": ""
                         },
                         Description: %{Text: "50% Deposit"}
                       }
@@ -474,32 +474,32 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                 ],
                 Fees: [
                   %{
-                    Amount: "5.00",
-                    Code: "27",
-                    Description: %{Name: "Commission", Text: "Commission - $5 flat fee"},
-                    TaxInclusive: "true",
+                    "@Amount": "5.00",
+                    "@Code": "27",
+                    Description: %{"@Name": "Commission", Text: "Commission - $5 flat fee"},
+                    "@TaxInclusive": "true",
                     Taxes: [],
-                    Type: "Inclusive"
+                    "@Type": "Inclusive"
                   }
                 ],
                 Guarantee: %{
-                  Comments: [%{Name: "PaymentReferenceId", Text: "123124151616"}],
+                  Comments: [%{"@Name": "PaymentReferenceId", Text: "123124151616"}],
                   GuaranteeDescription: [%{Text: "Payment accepted up front"}],
                   GuaranteesAccepted: [
                     %{
                       PaymentCard: %{
-                        CardCode: "VI",
+                        "@CardCode": "VI",
                         CardHolderName: "John Smith",
-                        CardNumber: "4444444444444444",
-                        CardType: "1",
-                        ExpireDate: "1114",
-                        MaskedCardNumber: "",
+                        "@CardNumber": "4444444444444444",
+                        "@CardType": "1",
+                        "@ExpireDate": "1114",
+                        "@MaskedCardNumber": "",
                         ThreeDomainSecurity: nil
                       }
                     }
                   ]
                 },
-                HotelReservationIDs: [%{ResID_Type: "14", ResID_Value: "RES_3243525"}],
+                HotelReservationIDs: [%{"@ResID_Type": "14", "@ResID_Value": "RES_3243525"}],
                 Memberships: [],
                 Profiles: [
                   %{
@@ -516,9 +516,9 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                           },
                           CustLoyalty: [
                             %{
-                              ExpiryDate: "2017-03-31",
-                              MembershipID: "1234567890",
-                              ProgramID: "FrequentFlyer"
+                              "@ExpiryDate": "2017-03-31",
+                              "@MembershipID": "1234567890",
+                              "@ProgramID": "FrequentFlyer"
                             }
                           ],
                           Email: "james.bond@mi5.co.uk",
@@ -529,27 +529,43 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                             Surname: "Bond"
                           },
                           Telephone: [
-                            %{PhoneNumber: "555-1234", PhoneTechType: "", PhoneUseType: ""},
-                            %{PhoneNumber: "555-4321", PhoneTechType: "", PhoneUseType: "4"},
-                            %{PhoneNumber: "0411444000", PhoneTechType: "5", PhoneUseType: ""},
-                            %{PhoneNumber: "213451515", PhoneTechType: "3", PhoneUseType: ""}
+                            %{
+                              "@PhoneNumber": "555-1234",
+                              "@PhoneTechType": "",
+                              "@PhoneUseType": ""
+                            },
+                            %{
+                              "@PhoneNumber": "555-4321",
+                              "@PhoneTechType": "",
+                              "@PhoneUseType": "4"
+                            },
+                            %{
+                              "@PhoneNumber": "0411444000",
+                              "@PhoneTechType": "5",
+                              "@PhoneUseType": ""
+                            },
+                            %{
+                              "@PhoneNumber": "213451515",
+                              "@PhoneTechType": "3",
+                              "@PhoneUseType": ""
+                            }
                           ]
                         },
-                        ProfileType: "1"
+                        "@ProfileType": "1"
                       },
-                      UniqueID: [%{ID: "12345", ID_Context: "CHANNEL", Type: "16"}]
+                      UniqueID: [%{"@ID": "12345", "@ID_Context": "CHANNEL", "@Type": "16"}]
                     }
                   }
                 ],
                 Total: %{
-                  AmountAfterTax: "583.25",
-                  AmountBeforeTax: "",
-                  CurrencyCode: "USD",
+                  "@AmountAfterTax": "583.25",
+                  "@AmountBeforeTax": "",
+                  "@CurrencyCode": "USD",
                   Taxes: [
                     %{
-                      Amount: "53.52",
-                      Code: "19",
-                      Percentage: "",
+                      "@Amount": "53.52",
+                      "@Code": "19",
+                      "@Percentage": "",
                       TaxDescription: %{Text: "GST 10 percent"}
                     }
                   ]
@@ -557,13 +573,13 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
               },
               ResGuests: [
                 %{
-                  Age: "8",
-                  ArrivalTime: "10:30:00",
+                  "@Age": "8",
+                  "@ArrivalTime": "10:30:00",
                   Comments: [
-                    %{Name: "ArrivalDetails", Text: "Arriving by coach"},
-                    %{Name: "DepartureDetails", Text: "Departure flight QF123"}
+                    %{"@Name": "ArrivalDetails", Text: "Arriving by coach"},
+                    %{"@Name": "DepartureDetails", Text: "Departure flight QF123"}
                   ],
-                  PrimaryIndicator: "true",
+                  "@PrimaryIndicator": "true",
                   Profiles: [
                     %{
                       ProfileInfo: %{
@@ -579,9 +595,9 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                             },
                             CustLoyalty: [
                               %{
-                                ExpiryDate: "2017-03-31",
-                                MembershipID: "1234567890",
-                                ProgramID: "FrequentFlyer"
+                                "@ExpiryDate": "2017-03-31",
+                                "@MembershipID": "1234567890",
+                                "@ProgramID": "FrequentFlyer"
                               }
                             ],
                             Email: "james.bond@mi5.co.uk",
@@ -592,114 +608,133 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                               Surname: "Bond"
                             },
                             Telephone: [
-                              %{PhoneNumber: "555-1234", PhoneTechType: "", PhoneUseType: ""},
-                              %{PhoneNumber: "555-4321", PhoneTechType: "", PhoneUseType: "4"},
-                              %{PhoneNumber: "0411444000", PhoneTechType: "5", PhoneUseType: ""},
-                              %{PhoneNumber: "213451515", PhoneTechType: "3", PhoneUseType: ""}
+                              %{
+                                "@PhoneNumber": "555-1234",
+                                "@PhoneTechType": "",
+                                "@PhoneUseType": ""
+                              },
+                              %{
+                                "@PhoneNumber": "555-4321",
+                                "@PhoneTechType": "",
+                                "@PhoneUseType": "4"
+                              },
+                              %{
+                                "@PhoneNumber": "0411444000",
+                                "@PhoneTechType": "5",
+                                "@PhoneUseType": ""
+                              },
+                              %{
+                                "@PhoneNumber": "213451515",
+                                "@PhoneTechType": "3",
+                                "@PhoneUseType": ""
+                              }
                             ]
                           },
-                          ProfileType: "1"
+                          "@ProfileType": "1"
                         },
-                        UniqueID: [%{ID: "12345", ID_Context: "CHANNEL", Type: "16"}]
+                        UniqueID: [%{"@ID": "12345", "@ID_Context": "CHANNEL", "@Type": "16"}]
                       }
                     }
                   ],
-                  ResGuestRPH: "1"
+                  "@ResGuestRPH": "1"
                 }
               ],
-              ResStatus: "Book",
-              RoomStayReservation: "",
+              "@ResStatus": "Book",
+              "@RoomStayReservation": "",
               UniqueID: [
-                %{ID: "EXP-001", ID_Context: "", Type: "14"},
-                %{ID: "1243132", ID_Context: "MESSAGE_UNIQUE_ID", Type: "16"}
+                %{"@ID": "EXP-001", "@ID_Context": "", "@Type": "14"},
+                %{"@ID": "1243132", "@ID_Context": "MESSAGE_UNIQUE_ID", "@Type": "16"}
               ],
               RoomStays: [
                 %{
-                  BasicPropertyInfo: %{HotelCode: "10107"},
+                  BasicPropertyInfo: %{"@HotelCode": "10107"},
                   Comments: [%{Text: "non-smoking Room requested, king bed"}],
-                  MarketCode: "Corporate",
-                  PromotionCode: "STAYANDSAVE",
-                  ResGuestRPHs: [%{RPH: "1"}],
-                  ServiceRPHs: [%{RPH: "3"}],
-                  SourceOfBusiness: "Radio",
-                  TimeSpan: %{End: "2013-03-15", Start: "2013-03-12"},
+                  "@MarketCode": "Corporate",
+                  "@PromotionCode": "STAYANDSAVE",
+                  ResGuestRPHs: [%{"@RPH": "1"}],
+                  ServiceRPHs: [%{"@RPH": "3"}],
+                  "@SourceOfBusiness": "Radio",
+                  TimeSpan: %{"@End": "2013-03-15", "@Start": "2013-03-12"},
                   Total: %{
-                    AmountAfterTax: "568.25",
-                    AmountBeforeTax: "",
-                    CurrencyCode: "USD",
+                    "@AmountAfterTax": "568.25",
+                    "@AmountBeforeTax": "",
+                    "@CurrencyCode": "USD",
                     Taxes: []
                   },
                   GuestCounts: [
-                    %{AgeQualifyingCode: "10", Count: "1"},
-                    %{AgeQualifyingCode: "8", Count: "1"},
-                    %{AgeQualifyingCode: "7", Count: "1"}
+                    %{"@AgeQualifyingCode": "10", "@Count": "1"},
+                    %{"@AgeQualifyingCode": "8", "@Count": "1"},
+                    %{"@AgeQualifyingCode": "7", "@Count": "1"}
                   ],
                   RatePlans: [
                     %{
-                      EffectiveDate: "2013-03-12",
-                      ExpireDate: "2013-03-14",
+                      "@EffectiveDate": "2013-03-12",
+                      "@ExpireDate": "2013-03-14",
                       RateDescription: nil,
-                      RatePlanCode: "RAC1",
-                      RatePlanName: "RACK Rate1",
+                      "@RatePlanCode": "RAC1",
+                      "@RatePlanName": "RACK Rate1",
                       AdditionalDetails: [
                         %{
                           DetailDescription: %{Text: "Stay n Save promotion grants 10% discount"},
-                          Type: "15"
+                          "@Type": "15"
                         },
                         %{
                           DetailDescription: %{Text: "Continental breakfast included"},
-                          Type: "43"
+                          "@Type": "43"
                         },
-                        %{DetailDescription: %{Text: "Expedia Collect"}, Type: "5"}
+                        %{DetailDescription: %{Text: "Expedia Collect"}, "@Type": "5"}
                       ]
                     },
                     %{
                       AdditionalDetails: [
-                        %{DetailDescription: %{Text: "Single Night Discount Promo"}, Type: "15"},
+                        %{
+                          DetailDescription: %{Text: "Single Night Discount Promo"},
+                          "@Type": "15"
+                        },
                         %{
                           DetailDescription: %{Text: "Continental breakfast included"},
-                          Type: "43"
+                          "@Type": "43"
                         },
-                        %{DetailDescription: %{Text: "Expedia Collect"}, Type: "5"}
+                        %{DetailDescription: %{Text: "Expedia Collect"}, "@Type": "5"}
                       ],
-                      EffectiveDate: "2013-03-14",
-                      ExpireDate: "2013-03-15",
+                      "@EffectiveDate": "2013-03-14",
+                      "@ExpireDate": "2013-03-15",
                       RateDescription: nil,
-                      RatePlanCode: "RAC2",
-                      RatePlanName: "RACK Rate2"
+                      "@RatePlanCode": "RAC2",
+                      "@RatePlanName": "RACK Rate2"
                     }
                   ],
                   RoomRates: [
                     %{
-                      NumberOfUnits: "1",
-                      RatePlanCode: "RAC1",
+                      "@NumberOfUnits": "1",
+                      "@RatePlanCode": "RAC1",
                       Rates: [
                         %{
                           Base: %{
-                            AmountAfterTax: "222.75",
-                            AmountBeforeTax: "202.50",
-                            CurrencyCode: "USD",
+                            "@AmountAfterTax": "222.75",
+                            "@AmountBeforeTax": "202.50",
+                            "@CurrencyCode": "USD",
                             Taxes: [
                               %{
-                                Amount: "20.25",
-                                Code: "19",
-                                Percentage: "",
+                                "@Amount": "20.25",
+                                "@Code": "19",
+                                "@Percentage": "",
                                 TaxDescription: %{Text: "GST 10 percent"}
                               }
                             ]
                           },
-                          EffectiveDate: "2013-03-12",
-                          ExpireDate: "2013-03-14",
-                          RateTimeUnit: "Day",
+                          "@EffectiveDate": "2013-03-12",
+                          "@ExpireDate": "2013-03-14",
+                          "@RateTimeUnit": "Day",
                           Total: %{
-                            AmountAfterTax: "222.75",
-                            AmountBeforeTax: "202.50",
-                            CurrencyCode: "USD",
+                            "@AmountAfterTax": "222.75",
+                            "@AmountBeforeTax": "202.50",
+                            "@CurrencyCode": "USD",
                             Taxes: [
                               %{
-                                Amount: "20.25",
-                                Code: "19",
-                                Percentage: "",
+                                "@Amount": "20.25",
+                                "@Code": "19",
+                                "@Percentage": "",
                                 TaxDescription: %{Text: "GST 10 percent"}
                               }
                             ]
@@ -707,39 +742,39 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                           UnitMultiplier: "2"
                         }
                       ],
-                      RoomTypeCode: "DR",
-                      ServiceRPHs: [%{RPH: "1"}]
+                      "@RoomTypeCode": "DR",
+                      ServiceRPHs: [%{"@RPH": "1"}]
                     },
                     %{
-                      NumberOfUnits: "1",
-                      RatePlanCode: "RAC2",
+                      "@NumberOfUnits": "1",
+                      "@RatePlanCode": "RAC2",
                       Rates: [
                         %{
                           Base: %{
-                            AmountAfterTax: "112.75",
-                            AmountBeforeTax: "102.50",
-                            CurrencyCode: "USD",
+                            "@AmountAfterTax": "112.75",
+                            "@AmountBeforeTax": "102.50",
+                            "@CurrencyCode": "USD",
                             Taxes: [
                               %{
-                                Amount: "10.25",
-                                Code: "19",
-                                Percentage: "",
+                                "@Amount": "10.25",
+                                "@Code": "19",
+                                "@Percentage": "",
                                 TaxDescription: %{Text: "GST 10 percent"}
                               }
                             ]
                           },
-                          EffectiveDate: "2013-03-14",
-                          ExpireDate: "2013-03-15",
-                          RateTimeUnit: "Day",
+                          "@EffectiveDate": "2013-03-14",
+                          "@ExpireDate": "2013-03-15",
+                          "@RateTimeUnit": "Day",
                           Total: %{
-                            AmountAfterTax: "112.75",
-                            AmountBeforeTax: "102.50",
-                            CurrencyCode: "USD",
+                            "@AmountAfterTax": "112.75",
+                            "@AmountBeforeTax": "102.50",
+                            "@CurrencyCode": "USD",
                             Taxes: [
                               %{
-                                Amount: "10.25",
-                                Code: "19",
-                                Percentage: "",
+                                "@Amount": "10.25",
+                                "@Code": "19",
+                                "@Percentage": "",
                                 TaxDescription: %{Text: "GST 10 percent"}
                               }
                             ]
@@ -747,29 +782,29 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
                           UnitMultiplier: "1"
                         }
                       ],
-                      RoomTypeCode: "DR",
-                      ServiceRPHs: [%{RPH: "2"}]
+                      "@RoomTypeCode": "DR",
+                      ServiceRPHs: [%{"@RPH": "2"}]
                     }
                   ],
                   RoomTypes: [
                     %{
-                      Configuration: "2 Beds and 1 cot",
-                      NonSmoking: "true",
+                      "@Configuration": "2 Beds and 1 cot",
+                      "@NonSmoking": "true",
                       RoomDescription: %{Text: "Double room"},
-                      RoomType: "Double Room",
-                      RoomTypeCode: "DR",
+                      "@RoomType": "Double Room",
+                      "@RoomTypeCode": "DR",
                       AdditionalDetails: [
                         %{
                           DetailDescription: %{Text: "Room paid in advance with credit card"},
-                          Type: "4"
+                          "@Type": "4"
                         },
                         %{
                           DetailDescription: %{Text: "Cancellation deadline 10/10/2012"},
-                          Type: "7"
+                          "@Type": "7"
                         },
                         %{
                           DetailDescription: %{Text: "Continental breakfast included"},
-                          Type: "5"
+                          "@Type": "5"
                         }
                       ]
                     }
@@ -778,108 +813,108 @@ defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
               ],
               Services: [
                 %{
-                  ID: "12345",
-                  ID_Context: "CHANNEL",
-                  Inclusive: "true",
+                  "@ID": "12345",
+                  "@ID_Context": "CHANNEL",
+                  "@Inclusive": "true",
                   Price: %{
                     RateDescription: nil,
                     Total: %{
-                      AmountAfterTax: "5.50",
-                      AmountBeforeTax: "5.00",
-                      CurrencyCode: "USD",
+                      "@AmountAfterTax": "5.50",
+                      "@AmountBeforeTax": "5.00",
+                      "@CurrencyCode": "USD",
                       Taxes: [
                         %{
-                          Amount: "0.50",
-                          Code: "19",
-                          Percentage: "",
+                          "@Amount": "0.50",
+                          "@Code": "19",
+                          "@Percentage": "",
                           TaxDescription: %{Text: "GST 10 percent"}
                         }
                       ]
                     }
                   },
-                  Quantity: "1",
-                  ServiceDetails: %{TimeSpan: %{End: "2013-03-14", Start: "2013-03-12"}},
-                  ServiceInventoryCode: "EXTRA_BED",
-                  ServiceRPH: "1",
-                  Type: "18"
+                  "@Quantity": "1",
+                  ServiceDetails: %{TimeSpan: %{"@End": "2013-03-14", "@Start": "2013-03-12"}},
+                  "@ServiceInventoryCode": "EXTRA_BED",
+                  "@ServiceRPH": "1",
+                  "@Type": "18"
                 },
                 %{
-                  ID: "12346",
-                  ID_Context: "CHANNEL",
-                  Inclusive: "true",
+                  "@ID": "12346",
+                  "@ID_Context": "CHANNEL",
+                  "@Inclusive": "true",
                   Price: %{
                     RateDescription: nil,
                     Total: %{
-                      AmountAfterTax: "2.75",
-                      AmountBeforeTax: "2.50",
-                      CurrencyCode: "USD",
+                      "@AmountAfterTax": "2.75",
+                      "@AmountBeforeTax": "2.50",
+                      "@CurrencyCode": "USD",
                       Taxes: [
                         %{
-                          Amount: "0.25",
-                          Code: "19",
-                          Percentage: "",
+                          "@Amount": "0.25",
+                          "@Code": "19",
+                          "@Percentage": "",
                           TaxDescription: %{Text: "GST 10 percent"}
                         }
                       ]
                     }
                   },
-                  Quantity: "1",
-                  ServiceDetails: %{TimeSpan: %{End: "2013-03-15", Start: "2013-03-14"}},
-                  ServiceInventoryCode: "EXTRA_BED",
-                  ServiceRPH: "2",
-                  Type: "18"
+                  "@Quantity": "1",
+                  ServiceDetails: %{TimeSpan: %{"@End": "2013-03-15", "@Start": "2013-03-14"}},
+                  "@ServiceInventoryCode": "EXTRA_BED",
+                  "@ServiceRPH": "2",
+                  "@Type": "18"
                 },
                 %{
-                  ID: "12347",
-                  ID_Context: "CHANNEL",
-                  Inclusive: "true",
+                  "@ID": "12347",
+                  "@ID_Context": "CHANNEL",
+                  "@Inclusive": "true",
                   Price: %{
                     RateDescription: nil,
                     Total: %{
-                      AmountAfterTax: "10.00",
-                      AmountBeforeTax: "9.09",
-                      CurrencyCode: "USD",
+                      "@AmountAfterTax": "10.00",
+                      "@AmountBeforeTax": "9.09",
+                      "@CurrencyCode": "USD",
                       Taxes: [
                         %{
-                          Amount: "0.91",
-                          Code: "19",
-                          Percentage: "",
+                          "@Amount": "0.91",
+                          "@Code": "19",
+                          "@Percentage": "",
                           TaxDescription: %{Text: "GST 10 percent"}
                         }
                       ]
                     }
                   },
-                  Quantity: "2",
+                  "@Quantity": "2",
                   ServiceDetails: nil,
-                  ServiceInventoryCode: "OTHER",
-                  ServiceRPH: "3",
-                  Type: "18"
+                  "@ServiceInventoryCode": "OTHER",
+                  "@ServiceRPH": "3",
+                  "@Type": "18"
                 },
                 %{
-                  ID: "12348",
-                  ID_Context: "CHANNEL",
-                  Inclusive: "true",
+                  "@ID": "12348",
+                  "@ID_Context": "CHANNEL",
+                  "@Inclusive": "true",
                   Price: %{
                     RateDescription: nil,
                     Total: %{
-                      AmountAfterTax: "15.00",
-                      AmountBeforeTax: "13.65",
-                      CurrencyCode: "USD",
+                      "@AmountAfterTax": "15.00",
+                      "@AmountBeforeTax": "13.65",
+                      "@CurrencyCode": "USD",
                       Taxes: [
                         %{
-                          Amount: "1.35",
-                          Code: "19",
-                          Percentage: "",
+                          "@Amount": "1.35",
+                          "@Code": "19",
+                          "@Percentage": "",
                           TaxDescription: %{Text: "GST 10 percent"}
                         }
                       ]
                     }
                   },
-                  Quantity: "1",
-                  ServiceDetails: %{TimeSpan: %{End: "2013-03-15", Start: "2013-03-12"}},
-                  ServiceInventoryCode: "EXTRA",
-                  ServiceRPH: "",
-                  Type: "18"
+                  "@Quantity": "1",
+                  ServiceDetails: %{TimeSpan: %{"@End": "2013-03-15", "@Start": "2013-03-12"}},
+                  "@ServiceInventoryCode": "EXTRA",
+                  "@ServiceRPH": "",
+                  "@Type": "18"
                 }
               ]
             }

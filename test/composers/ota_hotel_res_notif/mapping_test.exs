@@ -24,11 +24,11 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.ResponseTest do
 </SOAP-ENV:Envelope>|
 
   @message_with_warnings %{
-    OTA_HotelResNotifRS: %{EchoToken: "", TimeStamp: "2019-11-18T11:41:03+01:00", Version: ""},
+    OTA_HotelResNotifRS: %{"@EchoToken": "", "@TimeStamp": "2019-11-18T11:41:03+01:00", "@Version": ""},
     Success: true,
     Warnings: [
-      %{Code: "87", RecordID: "", Type: "Booking reference invalid", Warning: ""},
-      %{Code: "87", RecordID: "", Type: "Booking reference invalid", Warning: ""}
+      %{"@Code": "87", "@RecordID": "", "@Type": "Booking reference invalid", Warning: ""},
+      %{"@Code": "87", "@RecordID": "", "@Type": "Booking reference invalid", Warning: ""}
     ]
   }
 

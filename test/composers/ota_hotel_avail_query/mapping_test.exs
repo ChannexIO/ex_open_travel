@@ -134,28 +134,52 @@ Response with additional room description
   @message %{
     Success: true,
     OTA_HotelAvailRS: %{
-      EchoToken: "abc123",
-      TimeStamp: "2005-08-01T09:30:47+02:00",
-      Version: "1.0",
+      "@EchoToken": "abc123",
+      "@TimeStamp": "2005-08-01T09:30:47+02:00",
+      "@Version": "1.0",
       RoomStays: [
         %{
-          RatePlans: [%{RatePlanCode: "BAR", RatePlanDescription: nil}],
-          RoomTypes: [%{RoomDescription: %{Name: "Single Room", Text: ""}, RoomTypeCode: "SGL"}]
-        },
-        %{
-          RatePlans: [%{RatePlanCode: "LTS", RatePlanDescription: nil}],
-          RoomTypes: [%{RoomDescription: %{Name: "Single Room", Text: ""}, RoomTypeCode: "SGL"}]
-        },
-        %{
-          RatePlans: [%{RatePlanCode: "BAR", RatePlanDescription: nil}],
+          RatePlans: [
+            %{
+              "@RatePlanCode": "BAR",
+              RatePlanDescription: %{"@Name": "Best Available Rate", Text: ""}
+            }
+          ],
           RoomTypes: [
-            %{RoomDescription: %{Name: "Deluxe Double Room", Text: ""}, RoomTypeCode: "DBX"}
+            %{RoomDescription: %{"@Name": "Single Room", Text: ""}, "@RoomTypeCode": "SGL"}
           ]
         },
         %{
-          RatePlans: [%{RatePlanCode: "BAR", RatePlanDescription: nil}],
+          RatePlans: [
+            %{"@RatePlanCode": "LTS", RatePlanDescription: %{"@Name": "Long Term Stay", Text: ""}}
+          ],
           RoomTypes: [
-            %{RoomDescription: %{Name: "Standard Double Room", Text: ""}, RoomTypeCode: "DBL"}
+            %{RoomDescription: %{"@Name": "Single Room", Text: ""}, "@RoomTypeCode": "SGL"}
+          ]
+        },
+        %{
+          RatePlans: [
+            %{
+              "@RatePlanCode": "BAR",
+              RatePlanDescription: %{"@Name": "Best Available Rate", Text: ""}
+            }
+          ],
+          RoomTypes: [
+            %{RoomDescription: %{"@Name": "Deluxe Double Room", Text: ""}, "@RoomTypeCode": "DBX"}
+          ]
+        },
+        %{
+          RatePlans: [
+            %{
+              "@RatePlanCode": "BAR",
+              RatePlanDescription: %{"@Name": "Best Available Rate", Text: ""}
+            }
+          ],
+          RoomTypes: [
+            %{
+              RoomDescription: %{"@Name": "Standard Double Room", Text: ""},
+              "@RoomTypeCode": "DBL"
+            }
           ]
         }
       ]

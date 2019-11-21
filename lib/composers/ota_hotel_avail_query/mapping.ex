@@ -5,20 +5,20 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping do
 
   @room_types [
     ~x"./*[local-name() = 'RoomTypes']/*[local-name() = 'RoomType']"ol,
-    RoomTypeCode: ~x"./@RoomTypeCode"os,
+    "@RoomTypeCode": ~x"./@RoomTypeCode"os,
     RoomDescription: [
       ~x"./*[local-name() = 'RoomDescription']"o,
-      Name: ~x"./@Name"os,
+      "@Name": ~x"./@Name"os,
       Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
 
   @rate_plans [
     ~x"./*[local-name() = 'RatePlans']/*[local-name() = 'RatePlan']"ol,
-    RatePlanCode: ~x"./@RatePlanCode"os,
+    "@RatePlanCode": ~x"./@RatePlanCode"os,
     RatePlanDescription: [
-      ~x"./*[local-name() = 'RateDescription']"o,
-      Name: ~x"./@Name"os,
+      ~x"./*[local-name() = 'RatePlanDescription']"o,
+      "@Name": ~x"./@Name"os,
       Text: ~x"./*[local-name() = 'Text']/text()"os
     ]
   ]
@@ -32,9 +32,9 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping do
   @sweet_xpath [
     OTA_HotelAvailRS: [
       ~x"//*[local-name() = 'OTA_HotelAvailRS']",
-      Version: ~x"./@Version"os,
-      EchoToken: ~x"./@EchoToken"os,
-      TimeStamp: ~x"./@TimeStamp"os,
+      "@Version": ~x"./@Version"os,
+      "@EchoToken": ~x"./@EchoToken"os,
+      "@TimeStamp": ~x"./@TimeStamp"os,
       RoomStays: @room_stays
     ]
   ]
@@ -52,8 +52,8 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping do
       Errors: [
         ~x"./*[local-name() = 'Errors']/*[local-name() = 'Error']"l,
         Error: ~x"./text()"os,
-        Type: ~x"./*[local-name() = 'Error']/@Type"os,
-        Code: ~x"./*[local-name() = 'Error']/@Code"os
+        "@Type": ~x"./@Type"os,
+        "@Code": ~x"./@Code"os
       ]
     ]
   ]
@@ -64,9 +64,9 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping do
       Warnings: [
         ~x"./*[local-name() = 'Warnings']/*[local-name() = 'Warning']"l,
         Warning: ~x"./text()"s,
-        Type: ~x"./@Type"os,
-        Code: ~x"./@Code"os,
-        RecordID: ~x"./@RecordID"os
+        "@Type": ~x"./@Type"os,
+        "@Code": ~x"./@Code"os,
+        "@RecordID": ~x"./@RecordID"os
       ]
     ]
   ]
