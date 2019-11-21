@@ -344,7 +344,7 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
       "@EchoToken": ~x"./@EchoToken"os,
       "@TimeStamp": ~x"./@TimeStamp"os,
       ReservationsList: [
-        ~x"./*[local-name() = 'ReservationsList']"ol,
+        ~x"./*[local-name() = 'ReservationsList']"o,
         HotelReservation: @hotel_reservation_type
       ]
     ]
