@@ -13,13 +13,14 @@ defmodule ExOpenTravel.Response do
         }
   alias ExOpenTravel.Response.Converter
   alias ExOpenTravel.Response.FaultProcessor
-    alias ExOpenTravel.Response.Parser
+  alias ExOpenTravel.Response.Parser
 
   @doc """
   Executing with xml response body as string.
 
   Function `parse/1` returns a full parsed response structure as map.
   """
+  @spec parse_response(tuple(), any()) :: {:ok, map(), map()} | {:error, atom, map()}
   def parse_response({:ok, %{body: body, status_code: 200}, meta}, mapping_struct) do
     Converter.convert({:ok, body, meta}, mapping_struct)
   end
