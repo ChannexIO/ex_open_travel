@@ -18,6 +18,7 @@ defmodule ExOpenTravel do
 
   @type credentials :: %{endpoint: String.t(), password: String.t(), user: String.t()}
   @type response :: {:ok, any(), Meta.t()} | {:error, map(), Meta.t()}
+  @type options :: keyword() | any()
 
   @doc """
     Ping message
@@ -29,81 +30,91 @@ defmodule ExOpenTravel do
 
     ExOpenTravel.ota_ping()
   """
-  @spec ota_ping(credentials, map()) :: response()
-  def ota_ping(credentials, customization \\ %{})
+  @spec ota_ping(credentials, map(), options) :: response()
+  def ota_ping(credentials, customization \\ %{}, opts \\ [])
 
-  def ota_ping(credentials, customization) do
+  def ota_ping(credentials, customization, opts) do
     response_mapping = OtaPing |> get_default_mapping() |> Map.merge(customization)
 
     credentials
-    |> OtaPing.Request.execute(prepare_meta())
+    |> OtaPing.Request.execute(prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
   @doc """
   This method is used to update availability.
   """
-  @spec ota_hotel_inv_count_notif(OtaHotelInvCountNotif.t(), credentials, map()) :: response()
-  def ota_hotel_inv_count_notif(params, credentials, customization \\ %{})
+  @spec ota_hotel_inv_count_notif(OtaHotelInvCountNotif.t(), credentials, map(), options) ::
+          response()
+  def ota_hotel_inv_count_notif(params, credentials, customization \\ %{}, opts \\ [])
 
   def ota_hotel_inv_count_notif(
         %{hotel_code: _, inventories: _} = params,
         credentials,
-        customization
+        customization,
+        opts
       ) do
     response_mapping = OtaHotelInvCountNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
-    |> OtaHotelInvCountNotif.Request.execute(credentials, prepare_meta())
+    |> OtaHotelInvCountNotif.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
   @doc """
   This method is used to update rates (per room prices).
   """
-  @spec ota_hotel_rate_amount_notif(OtaHotelRateAmountNotif.t(), credentials, map()) :: response()
-  def ota_hotel_rate_amount_notif(params, credentials, customization \\ %{})
+  @spec ota_hotel_rate_amount_notif(OtaHotelRateAmountNotif.t(), credentials, map(), options) ::
+          response()
+  def ota_hotel_rate_amount_notif(params, credentials, customization \\ %{}, opts \\ [])
 
   def ota_hotel_rate_amount_notif(
         %{hotel_code: _, rate_amount_messages: _} = params,
         credentials,
-        customization
+        customization,
+        opts
       ) do
     response_mapping =
       OtaHotelRateAmountNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
-    |> OtaHotelRateAmountNotif.Request.execute(credentials, prepare_meta())
+    |> OtaHotelRateAmountNotif.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
   @doc """
   This method is used to update booking rule.
   """
-  @spec ota_hotel_booking_rule_notif(OtaHotelBookingRuleNotif.t(), credentials, map()) ::
+  @spec ota_hotel_booking_rule_notif(
+          OtaHotelBookingRuleNotif.t(),
+          credentials,
+          map(),
+          options
+        ) ::
           response()
-  def ota_hotel_booking_rule_notif(params, credentials, customization \\ %{})
+  def ota_hotel_booking_rule_notif(params, credentials, customization \\ %{}, opts \\ [])
 
   def ota_hotel_booking_rule_notif(
         %{hotel_code: _, rule_messages: _} = params,
         credentials,
-        customization
+        customization,
+        opts
       ) do
     response_mapping =
       OtaHotelBookingRuleNotif |> get_default_mapping() |> Map.merge(customization)
 
     params
-    |> OtaHotelBookingRuleNotif.Request.execute(credentials, prepare_meta())
+    |> OtaHotelBookingRuleNotif.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
   @doc """
   This method is used for booking confirmation.
   """
-  @spec ota_hotel_res_notif(OtaHotelResNotif.t(), credentials, map()) :: response()
-  def ota_hotel_res_notif(booking_ids, credentials, customization \\ %{})
+  @spec ota_hotel_res_notif(OtaHotelResNotif.t(), credentials, map(), options) :: response()
+  def ota_hotel_res_notif(booking_ids, credentials, customization \\ %{}, opts \\ [])
 
-  def ota_hotel_res_notif(booking_ids, credentials, customization) do
+  def ota_hotel_res_notif(booking_ids, credentials, customization, opts) do
     response_mapping = OtaHotelResNotif |> get_default_mapping() |> Map.merge(customization)
 
     %{
@@ -129,7 +140,7 @@ defmodule ExOpenTravel do
           }
         )
     }
-    |> OtaHotelResNotif.Request.execute(credentials, prepare_meta())
+    |> OtaHotelResNotif.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
@@ -161,28 +172,29 @@ defmodule ExOpenTravel do
                                  )
       {:ok, %{}, %{}}
   """
-  @spec ota_read(OtaRead.t(), credentials, map()) :: response()
-  def ota_read(params, credentials, customization \\ %{})
+  @spec ota_read(OtaRead.t(), credentials, map(), options) :: response()
+  def ota_read(params, credentials, customization \\ %{}, opts \\ [])
 
-  def ota_read(%{hotel_code: _} = params, credentials, customization) do
+  def ota_read(%{hotel_code: _} = params, credentials, customization, opts) do
     response_mapping = OtaRead |> get_default_mapping() |> Map.merge(customization)
 
     params
-    |> OtaRead.Request.execute(credentials, prepare_meta())
+    |> OtaRead.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 
   @doc """
   This method is used to Availability querying
   """
-  @spec ota_hotel_avail_query(OtaHotelAvailQuery.t(), credentials, map()) :: response()
-  def ota_hotel_avail_query(params, credentials, customization \\ %{})
+  @spec ota_hotel_avail_query(OtaHotelAvailQuery.t(), credentials, map(), options) ::
+          response()
+  def ota_hotel_avail_query(params, credentials, customization \\ %{}, opts \\ [])
 
-  def ota_hotel_avail_query(%{hotel_code: _} = params, credentials, customization) do
+  def ota_hotel_avail_query(%{hotel_code: _} = params, credentials, customization, opts) do
     response_mapping = OtaHotelAvailQuery |> get_default_mapping() |> Map.merge(customization)
 
     params
-    |> OtaHotelAvailQuery.Request.execute(credentials, prepare_meta())
+    |> OtaHotelAvailQuery.Request.execute(credentials, prepare_meta(), opts)
     |> Response.parse_response(response_mapping)
   end
 

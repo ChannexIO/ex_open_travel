@@ -5,6 +5,7 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
 
   @action "OTA_HotelInvCountNotif"
 
+  @type options :: keyword() | any()
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}
   @type t ::
           %{
@@ -26,12 +27,13 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
   @doc """
   This method is used to update availability.
   """
-  @spec execute(t, credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
-  def execute(%{hotel_code: _, inventories: _} = params, credentials, meta) do
+  @spec execute(t, credentials, Meta.t(), options) ::
+          {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
+  def execute(%{hotel_code: _, inventories: _} = params, credentials, meta, opts) do
     params
     |> build_hotel_inv_count_notif(meta)
     |> Document.build(@action, credentials)
-    |> Request.send(credentials)
+    |> Request.send(credentials, opts)
   end
 
   @spec build_hotel_inv_count_notif(t, Meta.t()) :: {{atom(), map | nil, list | nil}, Meta.t()}

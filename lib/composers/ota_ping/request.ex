@@ -6,6 +6,7 @@ defmodule ExOpenTravel.Composers.OtaPing.Request do
   @action "OTA_Ping"
 
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}
+  @type options :: keyword() | any()
 
   @doc """
     Ping message
@@ -17,10 +18,11 @@ defmodule ExOpenTravel.Composers.OtaPing.Request do
 
     ExOpenTravel.Composers.OtaPing.Request.execute()
   """
-  @spec execute(credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
-  def execute(credentials, meta) do
+  @spec execute(credentials, Meta.t(), options) ::
+          {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
+  def execute(credentials, meta, opts) do
     {{:"ns1:EchoData", nil, ["Echo text"]}, meta}
     |> Document.build(@action, credentials)
-    |> Request.send(credentials)
+    |> Request.send(credentials, opts)
   end
 end

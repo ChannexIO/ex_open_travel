@@ -1,10 +1,11 @@
-defmodule ExOpenTravel.Composers.OtaHotelResNotif.ResponseTest do
+defmodule ExOpenTravel.Composers.OtaHotelResNotif.MappingTest do
   use ExUnit.Case
-  doctest ExOpenTravel
+  doctest ExOpenTravel.Composers.OtaHotelResNotif.Mapping
+
   @moduletag :ex_open_travel_mapping_ota_hotel_res_notif
-  import SweetXml
-  alias ExOpenTravel.Response.Converter
+
   alias ExOpenTravel.Composers.OtaHotelResNotif.Mapping
+  alias ExOpenTravel.Response.Converter
 
   @raw_message_with_warning ~s|<?xml version="1.0" encoding="UTF-8"?>
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:ns2="http://www.w3.org/2005/08/addressing" xmlns:ns3="http://www.opentravel.org/OTA/2003/05">
@@ -24,7 +25,11 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.ResponseTest do
 </SOAP-ENV:Envelope>|
 
   @message_with_warnings %{
-    OTA_HotelResNotifRS: %{"@EchoToken": "", "@TimeStamp": "2019-11-18T11:41:03+01:00", "@Version": ""},
+    OTA_HotelResNotifRS: %{
+      "@EchoToken": "",
+      "@TimeStamp": "2019-11-18T11:41:03+01:00",
+      "@Version": ""
+    },
     Success: true,
     Warnings: [
       %{"@Code": "87", "@RecordID": "", "@Type": "Booking reference invalid", Warning: ""},

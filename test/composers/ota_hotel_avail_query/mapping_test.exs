@@ -1,10 +1,11 @@
-defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.ResponseTest do
+defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.MappingTest do
   use ExUnit.Case
-  doctest ExOpenTravel
+  doctest ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping
+
   @moduletag :ex_open_travel_ota_hotel_avail_query_mapping
-  import SweetXml
-  alias ExOpenTravel.Response.Converter
+
   alias ExOpenTravel.Composers.OtaHotelAvailQuery.Mapping
+  alias ExOpenTravel.Response.Converter
 
   @raw_message ~s|<OTA_HotelAvailRS xmlns="http://www.opentravel.org/OTA/2003/05" Version="1.0" TimeStamp="2005-08-01T09:30:47+02:00" EchoToken="abc123">
   <Success/>

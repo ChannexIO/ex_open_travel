@@ -1,10 +1,11 @@
-defmodule ExOpenTravel.Composers.OtaRead.ResponseTest do
+defmodule ExOpenTravel.Composers.OtaRead.MappingTest do
   use ExUnit.Case
-  doctest ExOpenTravel
+  doctest ExOpenTravel.Composers.OtaRead.Mapping
+
   @moduletag :ex_open_travel_ota_read_mapping
-  import SweetXml
-  alias ExOpenTravel.Response.Converter
+
   alias ExOpenTravel.Composers.OtaRead.Mapping
+  alias ExOpenTravel.Response.Converter
 
   @raw_message ~s|<OTA_ResRetrieveRS xmlns="http://www.opentravel.org/OTA/2003/05" Version="1.0" TimeStamp="2005-08-01T09:32:47+08:00" EchoToken="echo-abc123">
     <Success/>

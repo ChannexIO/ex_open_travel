@@ -1,6 +1,6 @@
 defmodule ExOpenTravel.Composers.OtaHotelResNotif.RequestTest do
   use ExUnit.Case
-  doctest ExOpenTravel
+  doctest ExOpenTravel.Composers.OtaHotelResNotif.Request
   @moduletag :ex_open_travel_ota_hotel_res_notif_request
 
   alias ExOpenTravel.Composers.OtaHotelResNotif.Request
