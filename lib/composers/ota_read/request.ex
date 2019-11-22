@@ -22,7 +22,7 @@ defmodule ExOpenTravel.Composers.OtaRead.Request do
 
   def execute(%{hotel_code: _} = params, credentials, meta, opts) do
     params
-    |> build_read(meta)
+    |> build_read(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end

@@ -21,7 +21,7 @@ defmodule ExOpenTravel.Composers.OtaPing.Request do
   @spec execute(credentials, Meta.t(), options) ::
           {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(credentials, meta, opts) do
-    {{:"ns1:EchoData", nil, ["Echo text"]}, meta}
+    {{:"ns1:EchoData", nil, ["Echo text"]}, Map.put(meta, :method, @action)}
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end

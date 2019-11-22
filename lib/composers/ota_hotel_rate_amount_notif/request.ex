@@ -41,7 +41,7 @@ defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.Request do
           {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(%{hotel_code: _, rate_amount_messages: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_rate_amount_notif(meta)
+    |> build_hotel_rate_amount_notif(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end

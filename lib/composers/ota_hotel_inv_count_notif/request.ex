@@ -31,7 +31,7 @@ defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
           {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(%{hotel_code: _, inventories: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_inv_count_notif(meta)
+    |> build_hotel_inv_count_notif(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end

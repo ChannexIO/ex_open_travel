@@ -37,7 +37,7 @@ defmodule ExOpenTravel.Composers.OtaHotelResNotif.Request do
           {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(%{hotel_reservations: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_res_notif(meta)
+    |> build_hotel_res_notif(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end

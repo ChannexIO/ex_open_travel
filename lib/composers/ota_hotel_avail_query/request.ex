@@ -16,7 +16,7 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Request do
           {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
   def execute(%{hotel_code: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_avail_query(meta)
+    |> build_hotel_avail_query(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
     |> Request.send(credentials, opts)
   end
