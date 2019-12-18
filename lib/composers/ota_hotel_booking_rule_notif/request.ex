@@ -122,7 +122,7 @@ defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request do
   def build_restriction_status(%{restriction: restriction, status: status}) do
     {:"ns1:RestrictionStatus",
      %{
-       Rerstriction: restriction,
+       Restriction: restriction,
        Status: status
      }, nil}
   end
