@@ -114,13 +114,13 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
           ~x"./*[local-name() = 'ThreeDomainSecurity']"o,
           Results: [
             ~x"./*[local-name() = 'Results']"o,
-            "@DThreeDSVersion": ~x"./@ThreeDSVersion"os,
-            "@DECI": ~x"./@ECI"os,
-            "@DCAVV": ~x"./@CAVV"os,
-            "@DPAResStatus": ~x"./@PAResStatus"os,
-            "@DSignatureVerification": ~x"./@SignatureVerification"os,
-            "@DXID": ~x"./@XID"os,
-            "@DEnrolled": ~x"./@Enrolled"os,
+            "@ThreeDSVersion": ~x"./@ThreeDSVersion"os,
+            "@ECI": ~x"./@ECI"os,
+            "@CAVV": ~x"./@CAVV"os,
+            "@PAResStatus": ~x"./@PAResStatus"os,
+            "@SignatureVerification": ~x"./@SignatureVerification"os,
+            "@XID": ~x"./@XID"os,
+            "@Enrolled": ~x"./@Enrolled"os,
             "@DSTransactionID": ~x"./@DSTransactionID"os
           ]
         ]

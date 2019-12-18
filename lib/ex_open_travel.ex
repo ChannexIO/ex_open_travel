@@ -198,7 +198,7 @@ defmodule ExOpenTravel do
     |> Response.parse_response(response_mapping)
   end
 
-  defp get_default_mapping(module) do
+  def get_default_mapping(module) do
     node = Node.self()
 
     %{
@@ -210,7 +210,7 @@ defmodule ExOpenTravel do
     }
   end
 
-  defp prepare_meta() do
+  def prepare_meta() do
     %{
       request: nil,
       response: nil,
