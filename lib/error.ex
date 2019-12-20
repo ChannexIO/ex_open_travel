@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Error do
+defmodule ExOpenTravel.Error do
   defexception [:reason]
   @type t :: %__MODULE__{reason: any}
 

@@ -1,13 +1,18 @@
-defmodule ExVerticalBooking.Request do
+defmodule ExOpenTravel.Request do
   @moduledoc "Get HTTP request after validation payload"
-  alias ExVerticalBooking.Response.Parser
-
-  @spec send({String.t(), map()}, map(), keyword()) ::
+  alias ExOpenTravel.Response.Parser
+  @type options :: keyword() | any()
+  @spec send({String.t(), map()}, map(), Keyword.t(), options) ::
           {:ok, map(), map()} | {:error, map(), map()}
-  def send(params, credentials, headers \\ [])
+  def send(params, credentials, headers \\ [], opts \\ [])
 
-  def send({document, %{success: true} = meta}, %{endpoint: endpoint}, headers) do
-    {_, payload} = response = HTTPoison.post(endpoint, document, headers, [])
+  def send({document, %{success: true} = meta}, %{endpoint: endpoint}, headers, opts) do
+    timeout = Keyword.get(opts, :timeout, 60_000)
+    recv_timeout = Keyword.get(opts, :recv_timeout, 120_000)
+
+    {_, payload} =
+      response =
+      HTTPoison.post(endpoint, document, headers, timeout: timeout, recv_timeout: recv_timeout)
 
     with {:ok, parsed_response} <- Parser.handle_response(response) do
       {:ok, parsed_response,
@@ -29,15 +34,15 @@ defmodule ExVerticalBooking.Request do
     end
   end
 
-  def send({document, %{success: false} = meta}, _, _opts) do
+  def send({document, %{success: false} = meta}, _, _headers, _opts) do
     {:error, document, Map.merge(meta, %{success: false, errors: meta.errors})}
   end
 
-  def send({:error, document, meta}, _, _opts) do
+  def send({:error, document, meta}, _, _headers, _opts) do
     {:error, document, Map.merge(meta, %{success: false, errors: meta.errors})}
   end
 
-  def send({document, meta}, _, _opts) do
+  def send({document, meta}, _, _headers, _opts) do
     {:error, document, Map.merge(meta, %{success: false, errors: [:invalid_endpoint]})}
   end
 end

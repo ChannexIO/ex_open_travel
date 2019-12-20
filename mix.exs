@@ -1,11 +1,11 @@
-defmodule ExVerticalBooking.MixProject do
+defmodule ExOpenTravel.MixProject do
   use Mix.Project
 
-  @version "0.2.3"
+  @version "0.3.0"
 
   def project do
     [
-      app: :ex_vertical_booking,
+      app: :ex_open_travel,
       version: @version,
       build_path: "./_build",
       config_path: "./config/config.exs",
@@ -13,8 +13,8 @@ defmodule ExVerticalBooking.MixProject do
       lockfile: "./mix.lock",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
-      name: "ExVerticalBooking",
-      source_url: "https://github.com/ChannexIO/ex_vertical_booking",
+      name: "ExOpenTravel",
+      source_url: "https://github.com/EevanW/ex_open_travel",
       docs: docs(),
       description: description(),
       package: package(),
@@ -32,7 +32,7 @@ defmodule ExVerticalBooking.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:sweet_xml, "~> 0.6.5"},
+      {:sweet_xml, "~> 0.6.6"},
       {:xml_builder, "~> 2.1"},
       {:httpoison, "~> 1.6"},
       {:elixir_uuid, "~> 1.2"},
@@ -47,16 +47,16 @@ defmodule ExVerticalBooking.MixProject do
   end
 
   defp description do
-    "VerticalBooking API Extension for Elixir"
+    "OpenTravel API Extension for Elixir"
   end
 
   defp package do
     [
-      name: "ex_vertical_booking",
+      name: "ex_open_travel",
       files: ~w(lib config .formatter.exs mix.exs README.md LICENSE),
       maintainers: ["Andrew Judis Yudin"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/ChannexIO/ex_vertical_booking"}
+      links: %{"GitHub" => "https://github.com/EevanW/ex_open_travel"}
     ]
   end
 end

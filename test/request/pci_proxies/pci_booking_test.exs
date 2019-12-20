@@ -1,20 +1,21 @@
-defmodule ExVerticalBooking.Request.PCIProxies.PCIBookingTest do
+defmodule ExOpenTravel.Request.PCIProxies.PCIBookingTest do
   use ExUnit.Case
-  @moduletag :ex_vertical_booking_pci_booking
+  @moduletag :ex_open_travel_pci_booking
 
-  alias ExVerticalBooking.Request.PCIProxies.Fixtures
-  alias ExVerticalBooking.Request.PCIProxies.PCIBooking
+  alias ExOpenTravel.Request.PCIProxies.Fixtures
+  alias ExOpenTravel.Request.PCIProxies.PCIBooking
   doctest PCIBooking
 
   @meta Fixtures.get(:meta)
   @pci @meta.pci
 
   test "success parse_headers" do
-    assert {:ok, @pci} = PCIBooking.parse_headers(@meta)
+    assert {:ok, @pci} = PCIBooking.parse_headers(@meta, "X-VERTICALBOOKINGFETCHCC")
   end
 
   test "fail parse_headers" do
-    assert {:error, %{success: false}} = PCIBooking.parse_headers(Map.delete(@meta, :headers))
+    assert {:error, %{success: false}} =
+             PCIBooking.parse_headers(Map.delete(@meta, :headers), "X-VERTICALBOOKINGFETCHCC")
   end
 
   test "success convert_token_headers when empty" do

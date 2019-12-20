@@ -1,14 +1,14 @@
-defmodule ExVerticalBooking.Request.DocumentTest do
+defmodule ExOpenTravel.Request.DocumentTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_headers
+  doctest ExOpenTravel
+  @moduletag :ex_open_travel_headers
 
-  alias ExVerticalBooking.Request.Document
+  alias ExOpenTravel.Request.Document
 
   @endpoint "fake_endpoint"
   @username "USERNAME"
   @password "PASSWORD"
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @credentials %{
     user: @username,
     password: @password,

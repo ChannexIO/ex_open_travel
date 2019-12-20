@@ -1,9 +1,9 @@
-defmodule ExVerticalBooking.Request.HelpersTest do
+defmodule ExOpenTravel.Request.HelpersTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_request_helpers
+  doctest ExOpenTravel
+  @moduletag :ex_open_travel_request_helpers
 
-  alias ExVerticalBooking.Request.Helpers
+  alias ExOpenTravel.Request.Helpers
 
   test "build_status_application_control/1" do
     element =
@@ -16,7 +16,7 @@ defmodule ExVerticalBooking.Request.HelpersTest do
         nil
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:StatusApplicationControl",
@@ -35,7 +35,7 @@ defmodule ExVerticalBooking.Request.HelpersTest do
         [{"TestOptions", "Test Value"}]
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:StatusApplicationControl",

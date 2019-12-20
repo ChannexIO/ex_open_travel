@@ -1,10 +1,11 @@
-defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotif do
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Request
-  alias ExVerticalBooking.Request.{Document, Helpers}
+defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request do
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request
+  alias ExOpenTravel.Request.{Document, Helpers}
 
   @action "OTA_HotelBookingRuleNotif"
 
+  @type options :: keyword() | any()
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}
   @type t ::
           %{
@@ -39,12 +40,13 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotif do
   @doc """
   This method is used to update booking rule.
   """
-  @spec execute(t, credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
-  def execute(%{hotel_code: _, rule_messages: _} = params, credentials, meta) do
+  @spec execute(t, credentials, Meta.t(), options) ::
+          {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
+  def execute(%{hotel_code: _, rule_messages: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_booking_rule_notif(meta)
+    |> build_hotel_booking_rule_notif(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials, [{"Target", "Production"}])
-    |> Request.send(credentials)
+    |> Request.send(credentials, opts)
   end
 
   @spec build_hotel_booking_rule_notif(t, Meta.t()) :: {{atom(), map | nil, list | nil}, Meta.t()}
@@ -120,7 +122,7 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotif do
   def build_restriction_status(%{restriction: restriction, status: status}) do
     {:"ns1:RestrictionStatus",
      %{
-       Rerstriction: restriction,
+       Restriction: restriction,
        Status: status
      }, nil}
   end

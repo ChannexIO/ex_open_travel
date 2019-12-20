@@ -1,54 +1,76 @@
-defmodule ExVerticalBooking.Response.Converter do
-  @callback list_nodes() :: list()
-  @callback convert({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
+defmodule ExOpenTravel.Response.Converter do
+  @callback get_mapping_for_payload() :: SweetXpath.t()
+  @callback convert_body({atom, any, any}) :: {:ok, map, any} | {:error, any, any}
 
-  def convert({:ok, struct, meta}, list_nodes) do
-    {:ok, wrap(%{}, struct, [], list_nodes), meta}
-  end
+  import SweetXml
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Response.FaultProcessor
 
-  def convert(response, _), do: response
+  @spec convert({atom, String.t(), Meta.t()}, map()) ::
+          {:ok, map, Meta.t()} | {:error, atom, Meta.t()}
+  def convert(
+        {:ok, xml, meta},
+        %{
+          action: action,
+          success_mapping: success_mapping,
+          warning_mapping: warning_mapping,
+          error_mapping: error_mapping,
+          payload_mapping: payload_mapping
+        } = mapping
+      ) do
+    try do
+      payload =
+        with result <- xmap(xml, success_mapping),
+             %{Success: success} when not is_nil(success) <- Map.get(result, action) do
+          get_payload(xml, mapping)
+        else
+          _ -> get_errors(xml, mapping)
+        end
 
-  defp wrap(acc, {key, %{}, [value]}, _prev, _list_nodes) when is_binary(value) do
-    Map.put(acc, atomize(key), value)
-  end
-
-  defp wrap(acc, {key, args, childs}, prev, list_nodes) do
-    Map.put(
-      acc,
-      atomize(key),
-      case get_type_for([key | prev], list_nodes) do
-        :list ->
-          childs
-          |> Enum.reduce([], fn child, acc ->
-            [wrap(%{}, child, [key | prev], list_nodes) | acc]
-          end)
-          |> Enum.reverse()
-
-        :map ->
-          arguments =
-            Enum.reduce(
-              args,
-              %{},
-              fn {key, value}, acc -> Map.put(acc, atomize("@#{key}"), value) end
-            )
-
-          Enum.reduce(childs, arguments, fn child, acc ->
-            wrap(acc, child, [key | prev], list_nodes)
-          end)
-      end
-    )
-  end
-
-  defp get_type_for(path, list_nodes) do
-    str_path = path |> Enum.reverse() |> Enum.join("/")
-
-    if Enum.member?(list_nodes, str_path) do
-      :list
-    else
-      :map
+      {:ok, payload, meta}
+    rescue
+      e in ArgumentError -> FaultProcessor.create_response(e, meta)
+      e in FunctionClauseError -> FaultProcessor.create_response(e, meta)
+    catch
+      :exit, e -> FaultProcessor.create_response({:exit, e}, meta)
+      :fatal, e -> FaultProcessor.create_response({:fatal, e}, meta)
     end
   end
 
-  defp atomize(key) when is_binary(key), do: String.to_atom(key)
-  defp atomize(key), do: key
+  def convert({:error, _, meta} = e, _), do: FaultProcessor.create_response(e, meta)
+
+  defp get_payload(xml, %{action: action, payload_mapping: payload_mapping} = mapping) do
+    result = xmap(xml, payload_mapping)
+
+    updated_result =
+      with payload when not is_nil(payload) <- Map.get(result, action) do
+        Map.put(result, :Success, true)
+      else
+        _ -> result
+      end
+
+    enrich_warnings(updated_result, xml, mapping)
+  end
+
+  defp enrich_warnings(payload, xml, %{action: action, warning_mapping: warning_mapping}) do
+    with result <- xmap(xml, warning_mapping),
+         %{Warnings: warnings} when not ([] == warnings) <- Map.get(result, action) do
+      Map.put(payload, :Warnings, warnings)
+    else
+      _ -> payload
+    end
+  end
+
+  defp enrich_warnings(payload, _xml, _mapping), do: payload
+
+  defp get_errors(xml, %{action: action, error_mapping: error_mapping}) do
+    result = xmap(xml, error_mapping)
+
+    updated_result =
+      with payload when not is_nil(payload) <- Map.get(result, action) do
+        Map.put(result, :Success, false)
+      else
+        _ -> result
+      end
+  end
 end

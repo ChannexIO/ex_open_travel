@@ -1,11 +1,11 @@
-defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
+defmodule ExOpenTravel.Composers.OtaHotelBookingRuleNotif.RequestTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_request_ota_hotel_booking_rule_notif
+  doctest ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request
+  @moduletag :ex_open_travel_ota_hotel_booking_rule_notif_request
 
-  alias ExVerticalBooking.Request.OtaHotelBookingRuleNotif
+  alias ExOpenTravel.Composers.OtaHotelBookingRuleNotif.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
 
   @meta %{
     request: nil,
@@ -19,7 +19,7 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
 
   test "build_hotel_booking_rule_notif/2" do
     {element, _meta} =
-      OtaHotelBookingRuleNotif.build_hotel_booking_rule_notif(
+      Request.build_hotel_booking_rule_notif(
         %{
           hotel_code: @hotel_code,
           rule_messages: [
@@ -57,10 +57,10 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
-             {:"ns1:RuleMessages", %{HotelCode: "2e097d85-9eec-433a-9f0a-dd4f1622501f"},
+             {:"ns1:RuleMessages", %{HotelCode: "00000"},
               [
                 {:"ns1:RuleMessage", nil,
                  [
@@ -91,17 +91,17 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
                        ]},
                       {:"ns1:BookingRule", nil,
                        [
-                         {:"ns1:RestrictionStatus", %{Rerstriction: "Master", Status: "Close"},
+                         {:"ns1:RestrictionStatus", %{Restriction: "Master", Status: "Close"},
                           nil}
                        ]},
                       {:"ns1:BookingRule", nil,
                        [
-                         {:"ns1:RestrictionStatus", %{Rerstriction: "Arrival", Status: "Open"},
+                         {:"ns1:RestrictionStatus", %{Restriction: "Arrival", Status: "Open"},
                           nil}
                        ]},
                       {:"ns1:BookingRule", nil,
                        [
-                         {:"ns1:RestrictionStatus", %{Rerstriction: "Departure", Status: "Close"},
+                         {:"ns1:RestrictionStatus", %{Restriction: "Departure", Status: "Close"},
                           nil}
                        ]}
                     ]}
@@ -111,7 +111,7 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
 
   test "build_hotel_booking_rule_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelBookingRuleNotif.build_hotel_booking_rule_notif(
+             Request.build_hotel_booking_rule_notif(
                %{hotel_code: @hotel_code, rule_messages: []},
                @meta
              )
@@ -119,7 +119,7 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
 
   test "build_booking_rules/1" do
     element =
-      OtaHotelBookingRuleNotif.build_booking_rules([
+      Request.build_booking_rules([
         %{
           lengths_of_stay: [
             %{time: "2", time_unit: "Day", min_max_message_type: "SetMinLOS"}
@@ -140,24 +140,24 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
         }
       ])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_booking_rule/1" do
     element =
-      OtaHotelBookingRuleNotif.build_booking_rule(%{
+      Request.build_booking_rule(%{
         lengths_of_stay: [
           %{time: "2", time_unit: "Day", min_max_message_type: "SetMinLOS"}
         ],
         restriction_status: nil
       })
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_lengths_of_stay/1" do
     element =
-      OtaHotelBookingRuleNotif.build_lengths_of_stay([
+      Request.build_lengths_of_stay([
         %{
           time: "2",
           time_unit: "Day",
@@ -165,22 +165,22 @@ defmodule ExVerticalBooking.Request.OtaHotelBookingRuleNotifTest do
         }
       ])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "build_restriction_status/1" do
     element =
-      OtaHotelBookingRuleNotif.build_restriction_status(%{
+      Request.build_restriction_status(%{
         restriction: "Departure",
         status: "Close"
       })
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 
   test "destination_system_codes/1" do
-    element = OtaHotelBookingRuleNotif.destination_system_codes([1, 2, 3])
+    element = Request.destination_system_codes([1, 2, 3])
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
   end
 end

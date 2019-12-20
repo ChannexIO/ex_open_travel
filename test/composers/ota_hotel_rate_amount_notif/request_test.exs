@@ -1,11 +1,11 @@
-defmodule ExVerticalBooking.Request.OtaHotelRateAmountNotifTest do
+defmodule ExOpenTravel.Composers.OtaHotelRateAmountNotif.RequestTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_request_ota_hotel_rate_amount
+  doctest ExOpenTravel.Composers.OtaHotelRateAmountNotif.Request
+  @moduletag :ex_open_travel_ota_hotel_rate_amount_request
 
-  alias ExVerticalBooking.Request.OtaHotelRateAmountNotif
+  alias ExOpenTravel.Composers.OtaHotelRateAmountNotif.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @meta %{
     request: nil,
     response: nil,
@@ -17,7 +17,7 @@ defmodule ExVerticalBooking.Request.OtaHotelRateAmountNotifTest do
   }
   test "build_hotel_rate_amount_notif" do
     {element, _meta} =
-      OtaHotelRateAmountNotif.build_hotel_rate_amount_notif(
+      Request.build_hotel_rate_amount_notif(
         %{
           hotel_code: @hotel_code,
           rate_amount_messages: [
@@ -46,10 +46,10 @@ defmodule ExVerticalBooking.Request.OtaHotelRateAmountNotifTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
-             {:"ns1:RateAmountMessages", %{HotelCode: "2e097d85-9eec-433a-9f0a-dd4f1622501f"},
+             {:"ns1:RateAmountMessages", %{HotelCode: "00000"},
               [
                 {:"ns1:RateAmountMessage", nil,
                  [
@@ -82,7 +82,7 @@ defmodule ExVerticalBooking.Request.OtaHotelRateAmountNotifTest do
 
   test "build_hotel_rate_amount_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelRateAmountNotif.build_hotel_rate_amount_notif(
+             Request.build_hotel_rate_amount_notif(
                %{
                  hotel_code: @hotel_code,
                  rate_amount_messages: []

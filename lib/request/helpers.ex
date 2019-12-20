@@ -1,4 +1,4 @@
-defmodule ExVerticalBooking.Request.Helpers do
+defmodule ExOpenTravel.Request.Helpers do
   def build_status_application_control(
         %{
           start: sac_start,
@@ -25,5 +25,14 @@ defmodule ExVerticalBooking.Request.Helpers do
      Enum.map(inv_counts, fn inv_count ->
        {:"ns1:InvCount", %{CountType: inv_count.count_type, Count: inv_count.count}, nil}
      end)}
+  end
+
+  def update_meta_if_unfounded(meta, map, field) do
+    with :error <- Map.fetch(map, field) do
+      message = :"unfounded_#{field}"
+      Map.update(meta, :errors, [message], &[message | &1])
+    else
+      _ -> meta
+    end
   end
 end

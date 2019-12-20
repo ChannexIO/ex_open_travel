@@ -1,11 +1,11 @@
-defmodule ExVerticalBooking.Request.OtaHotelInvCountNotifTest do
+defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.RequestTest do
   use ExUnit.Case
-  doctest ExVerticalBooking
-  @moduletag :ex_vertical_booking_request_ota_hotel_inv_count_notif
+  doctest ExOpenTravel.Composers.OtaHotelInvCountNotif.Request
+  @moduletag :ex_open_travel_ota_hotel_inv_count_notif_request
 
-  alias ExVerticalBooking.Request.OtaHotelInvCountNotif
+  alias ExOpenTravel.Composers.OtaHotelInvCountNotif.Request
 
-  @hotel_code "2e097d85-9eec-433a-9f0a-dd4f1622501f"
+  @hotel_code "00000"
   @meta %{
     request: nil,
     response: nil,
@@ -17,7 +17,7 @@ defmodule ExVerticalBooking.Request.OtaHotelInvCountNotifTest do
   }
   test "build_hotel_inv_count_notif" do
     {element, _meta} =
-      OtaHotelInvCountNotif.build_hotel_inv_count_notif(
+      Request.build_hotel_inv_count_notif(
         %{
           hotel_code: @hotel_code,
           inventories: [
@@ -34,7 +34,7 @@ defmodule ExVerticalBooking.Request.OtaHotelInvCountNotifTest do
         @meta
       )
 
-    element |> XmlBuilder.generate()
+    assert XmlBuilder.generate(element)
 
     assert element ==
              {:"ns1:Inventories", %{HotelCode: @hotel_code},
@@ -50,7 +50,7 @@ defmodule ExVerticalBooking.Request.OtaHotelInvCountNotifTest do
 
   test "build_hotel_inv_count_notif_fail" do
     assert {:error, _, %{success: false, errors: [:empty_payload]}} =
-             OtaHotelInvCountNotif.build_hotel_inv_count_notif(
+             Request.build_hotel_inv_count_notif(
                %{hotel_code: @hotel_code, inventories: []},
                @meta
              )

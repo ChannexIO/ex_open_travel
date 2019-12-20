@@ -1,14 +1,27 @@
-defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
-  alias ExVerticalBooking.Request
+defmodule ExOpenTravel.Request.PCIProxies.PCIBooking do
+  alias ExOpenTravel.Request
+  alias ExOpenTravel.Request.Helpers
   @api_endpoint "https://service.pcibooking.net/api"
+  @type options :: keyword() | any()
+  @spec proxy_send({String.t(), map()}, map(), options) ::
+          {:ok, map(), map()} | {:error, map(), map()}
+  def proxy_send(payload, credentials, opts \\ [])
 
-  @spec proxy_send({String.t(), map()}, map()) :: {:ok, map(), map()} | {:error, map(), map()}
-  def proxy_send({document, %{success: true} = meta}, %{endpoint: endpoint, api_key: api_key}) do
-    with {:ok, temp_session} <- start_temporary_session(api_key),
-         url <- get_tokenized_booking_url(endpoint, temp_session),
-         {:ok, response, meta} <- send_request(url, {document, meta}, api_key) do
+  def proxy_send(
+        {document, %{success: true} = meta},
+        %{
+          endpoint: endpoint,
+          pci_booking_fetch_header: fetch_header,
+          pci_booking_profile_name: profile_name,
+          pci_booking_api_key: api_key
+        },
+        opts
+      ) do
+    with {:ok, temp_session} <- start_temporary_session(api_key, opts),
+         url <- get_tokenized_booking_url(endpoint, temp_session, profile_name),
+         {:ok, response, meta} <- send_request(url, {document, meta}, api_key, opts) do
       pci =
-        with {:ok, meta} <- parse_headers(meta),
+        with {:ok, meta} <- parse_headers(meta, fetch_header),
              {:ok, pci} <- convert_token_headers(meta) do
           pci
         end
@@ -17,53 +30,52 @@ defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
     end
   end
 
-  def proxy_send(payload, credentials) do
-    Request.send(payload, credentials)
+  def proxy_send({document, meta}, credentials, opts) do
+    updated_meta =
+      meta
+      |> Helpers.update_meta_if_unfounded(credentials, :endpoint)
+      |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_fetch_header)
+      |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_profile_name)
+      |> Helpers.update_meta_if_unfounded(credentials, :pci_booking_api_key)
+      |> Map.put(:success, false)
+
+    Request.send({document, updated_meta}, credentials, opts)
   end
 
-  @spec get_token_meta(String.t(), String.t()) :: any()
-  def get_token_meta(token, api_key) do
-    token
-    |> get_token_meta_url()
-    |> HTTPoison.get(headers(api_key))
-  end
-
-  defp start_temporary_session(api_key) do
+  defp start_temporary_session(api_key, opts) do
     with {:ok, body, _} <-
-           send_request("/payments/paycard/tempsession", {"", %{success: true}}, api_key) do
+           send_request("/payments/paycard/tempsession", {"", %{success: true}}, api_key, opts) do
       {:ok, String.replace(body.body, "\"", "")}
-    else
-      error -> error
     end
   end
 
-  defp get_tokenized_booking_url(endpoint, temp_session) do
+  defp get_tokenized_booking_url(endpoint, temp_session, profile_name) do
     get_url("/payments/paycard/capture",
       sessionToken: temp_session,
       httpMethod: "POST",
-      profileName: "VerticalBooking",
+      profileName: profile_name,
       targetURI: endpoint,
       saveCVV: true
     )
   end
 
-  defp send_request(url, body, api_key) do
-    Request.send(body, %{endpoint: "#{@api_endpoint}#{url}"}, headers(api_key))
+  defp send_request(url, body, api_key, opts) do
+    Request.send(body, %{endpoint: "#{@api_endpoint}#{url}"}, headers(api_key), opts)
   end
 
-  def parse_headers(%{headers: headers}) do
+  def parse_headers(%{headers: headers}, fetch_header) do
     {
       :ok,
       # The direction of the headers sequence is critical!
       %{
-        tokens: headers |> get_from("X-VERTICALBOOKINGFETCHCC") |> split(";"),
+        tokens: headers |> get_from(fetch_header) |> split(";"),
         errors: headers |> get_from("X-pciBooking-Tokenization-Errors") |> split(";;"),
         warnings: headers |> get_from("X-pciBooking-Tokenization-Warnings") |> split(";;")
       }
     }
   end
 
-  def parse_headers(meta) do
+  def parse_headers(meta, _fetch_header) do
     errors = Map.get(meta, :errors) || []
 
     {:error,
@@ -130,12 +142,6 @@ defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
     map
   end
 
-  defp get_token_meta_url(token) do
-    get_url("https://service.pcibooking.net/api/payments/paycard/meta",
-      ref: token |> String.split("/") |> List.last()
-    )
-  end
-
   defp get_url(url, arguments) do
     arguments =
       arguments
@@ -153,7 +159,7 @@ defmodule ExVerticalBooking.Request.PCIProxies.PCIBooking do
   defp headers(api_key) do
     [
       {"Authorization", "APIKEY #{api_key}"},
-      {"Chache-Control", "no-cache"}
+      {"Cache-Control", "no-cache"}
     ]
   end
 

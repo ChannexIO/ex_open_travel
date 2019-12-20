@@ -1,10 +1,11 @@
-defmodule ExVerticalBooking.Request.OtaHotelInvCountNotif do
-  alias ExVerticalBooking.Meta
-  alias ExVerticalBooking.Request
-  alias ExVerticalBooking.Request.{Document, Helpers}
+defmodule ExOpenTravel.Composers.OtaHotelInvCountNotif.Request do
+  alias ExOpenTravel.Meta
+  alias ExOpenTravel.Request
+  alias ExOpenTravel.Request.{Document, Helpers}
 
   @action "OTA_HotelInvCountNotif"
 
+  @type options :: keyword() | any()
   @type credentials :: %{user: String.t(), password: String.t(), endpoint: String.t()}
   @type t ::
           %{
@@ -26,12 +27,13 @@ defmodule ExVerticalBooking.Request.OtaHotelInvCountNotif do
   @doc """
   This method is used to update availability.
   """
-  @spec execute(t, credentials, Meta.t()) :: {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
-  def execute(%{hotel_code: _, inventories: _} = params, credentials, meta) do
+  @spec execute(t, credentials, Meta.t(), options) ::
+          {:ok, struct(), Meta.t()} | {:error, any(), Meta.t()}
+  def execute(%{hotel_code: _, inventories: _} = params, credentials, meta, opts) do
     params
-    |> build_hotel_inv_count_notif(meta)
+    |> build_hotel_inv_count_notif(Map.put(meta, :method, @action))
     |> Document.build(@action, credentials)
-    |> Request.send(credentials)
+    |> Request.send(credentials, opts)
   end
 
   @spec build_hotel_inv_count_notif(t, Meta.t()) :: {{atom(), map | nil, list | nil}, Meta.t()}
@@ -40,19 +42,19 @@ defmodule ExVerticalBooking.Request.OtaHotelInvCountNotif do
   end
 
   def build_hotel_inv_count_notif(%{hotel_code: hotel_code, inventories: inventories}, meta) do
-    inventories_elements =
-      inventories
-      |> Enum.map(fn %{
-                       status_application_control: status_application_control,
-                       inv_counts: inv_counts
-                     } ->
-        {:"ns1:Inventory", nil,
-         [
-           Helpers.build_status_application_control(status_application_control, nil),
-           Helpers.build_inv_counts(inv_counts)
-         ]}
-      end)
+    inventories_elements = Enum.map(inventories, &build_inventory/1)
 
     {{:"ns1:Inventories", %{HotelCode: "#{hotel_code}"}, inventories_elements}, meta}
+  end
+
+  defp build_inventory(%{
+         status_application_control: status_application_control,
+         inv_counts: inv_counts
+       }) do
+    {:"ns1:Inventory", nil,
+     [
+       Helpers.build_status_application_control(status_application_control, nil),
+       Helpers.build_inv_counts(inv_counts)
+     ]}
   end
 end
