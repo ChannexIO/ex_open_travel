@@ -14,7 +14,7 @@ defmodule ExOpenTravel.MixProject do
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       name: "ExOpenTravel",
-      source_url: "https://github.com/EevanW/ex_open_travel",
+      source_url: "https://github.com/ChannexIO/ex_open_travel",
       docs: docs(),
       description: description(),
       package: package(),
@@ -56,7 +56,7 @@ defmodule ExOpenTravel.MixProject do
       files: ~w(lib config .formatter.exs mix.exs README.md LICENSE),
       maintainers: ["Andrew Judis Yudin"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/EevanW/ex_open_travel"}
+      links: %{"GitHub" => "https://github.com/ChannexIO/ex_open_travel"}
     ]
   end
 end
