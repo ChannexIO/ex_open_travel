@@ -307,9 +307,9 @@ defmodule ExOpenTravel.Composers.OtaRead.Mapping do
       "@ID_Context": ~x"./@ID_Context"os
     ],
     POS: [
-      ~x"./*[local-name() = 'POS']"ol,
-      Source: [
-        ~x"./*[local-name() = 'Source']"o,
+      ~x"./*[local-name() = 'POS']"o,
+      Sources: [
+        ~x"./*[local-name() = 'Source']"ol,
         RequestorID: [
           ~x"./*[local-name() = 'RequestorID']"o,
           "@Type": ~x"./@Type"os,
