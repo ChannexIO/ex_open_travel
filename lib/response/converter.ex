@@ -13,9 +13,9 @@ defmodule ExOpenTravel.Response.Converter do
         %{
           action: action,
           success_mapping: success_mapping,
-          warning_mapping: warning_mapping,
-          error_mapping: error_mapping,
-          payload_mapping: payload_mapping
+          warning_mapping: _,
+          error_mapping: _,
+          payload_mapping: _
         } = mapping
       ) do
     try do
@@ -66,11 +66,10 @@ defmodule ExOpenTravel.Response.Converter do
   defp get_errors(xml, %{action: action, error_mapping: error_mapping}) do
     result = xmap(xml, error_mapping)
 
-    updated_result =
-      with payload when not is_nil(payload) <- Map.get(result, action) do
-        Map.put(result, :Success, false)
-      else
-        _ -> result
-      end
+    with payload when not is_nil(payload) <- Map.get(result, action) do
+      Map.put(result, :Success, false)
+    else
+      _ -> result
+    end
   end
 end

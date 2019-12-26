@@ -22,7 +22,7 @@ defmodule ExOpenTravel.Composers.OtaHotelAvailQuery.Request do
   end
 
   @spec build_hotel_avail_query(t, Meta.t()) :: {{atom(), map | nil, list | nil}, Meta.t()}
-  def build_hotel_avail_query(%{hotel_code: hotel_code} = payload, meta) do
+  def build_hotel_avail_query(%{hotel_code: hotel_code}, meta) do
     hotel_ref = {:HotelRef, %{HotelCode: hotel_code}, nil}
     criterion = {:Criterion, nil, [hotel_ref]}
     criteria = {:HotelSearchCriteria, nil, [criterion]}

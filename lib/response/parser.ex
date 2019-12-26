@@ -17,7 +17,7 @@ defmodule ExOpenTravel.Response.Parser do
 
   If a list is empty then `parse/1` returns full parsed response structure into map.
   """
-  @spec parse(String.t(),  map) :: map()
+  @spec parse(String.t(), map) :: map()
   def parse(xml_response, meta) do
     xml_response = String.trim(xml_response)
 
@@ -41,7 +41,6 @@ defmodule ExOpenTravel.Response.Parser do
       :fatal, e -> FaultProcessor.create_response({:fatal, e}, meta)
     end
   end
-
 
   @spec parse_record(tuple()) :: map() | String.t()
   defp parse_record({:xmlElement, tag, _, _, _, _, _, attributes, elements, _, _, _}) do
@@ -110,13 +109,6 @@ defmodule ExOpenTravel.Response.Parser do
     |> get_envelope_namespace()
     |> List.to_string()
     |> apply_namespace_to_tag("Fault")
-  end
-
-  defp get_body_tag(xml_response) do
-    xml_response
-    |> get_envelope_namespace()
-    |> List.to_string()
-    |> apply_namespace_to_tag("Body")
   end
 
   defp get_envelope_namespace(xml_response) do
