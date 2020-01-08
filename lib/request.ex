@@ -7,6 +7,7 @@ defmodule ExOpenTravel.Request do
   def send(params, credentials, headers \\ [], opts \\ [])
 
   def send({document, %{success: true} = meta}, %{endpoint: endpoint}, headers, opts) do
+    headers = Keyword.merge([{"Content-Type", "text/xml;charset=UTF-8"}], headers)
     timeout = Keyword.get(opts, :timeout, 60_000)
     recv_timeout = Keyword.get(opts, :recv_timeout, 120_000)
 
@@ -17,10 +18,12 @@ defmodule ExOpenTravel.Request do
     with {:ok, parsed_response} <- Parser.handle_response(response) do
       {:ok, parsed_response,
        Map.merge(meta, %{
+         status_code: payload.status_code,
          response: payload.body,
          headers: payload.headers,
          finished_at: DateTime.utc_now(),
-         request: document
+         request: document,
+         request_url: endpoint
        })}
     else
       {:error, reason} ->
@@ -29,7 +32,8 @@ defmodule ExOpenTravel.Request do
            success: false,
            errors: [reason],
            finished_at: DateTime.utc_now(),
-           request: document
+           request: document,
+           request_url: endpoint
          })}
     end
   end
