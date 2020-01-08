@@ -25,6 +25,11 @@ defmodule ExOpenTravel.Response do
     Converter.convert({:ok, body, meta}, mapping_struct)
   end
 
+  def parse_response({:ok, %{status_code: status_code}, meta}, _)
+      when status_code >= 500 do
+    FaultProcessor.create_response(%{http_error: Integer.to_string(status_code)}, meta)
+  end
+
   def parse_response({:ok, %{body: body, status_code: status_code}, meta}, _)
       when status_code >= 400 do
     Parser.parse(body, meta)

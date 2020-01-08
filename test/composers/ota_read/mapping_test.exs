@@ -443,18 +443,26 @@ defmodule ExOpenTravel.Composers.OtaRead.MappingTest do
             BasicPropertyInfo: nil,
             "@CreateDateTime": "2007-12-09T08:51:45.000+0000",
             "@LastModifyDateTime": "",
-            POS: [
-              %{
-                Source: %{
+            POS: %{
+              Sources: [
+                %{
                   BookingChannel: %{
-                    CompanyName: %{"@Code": "EXP", CompanyName: "Expedia"},
                     "@Primary": "true",
-                    "@Type": "7"
+                    "@Type": "7",
+                    CompanyName: %{"@Code": "EXP", CompanyName: "Expedia"}
                   },
                   RequestorID: %{"@ID": "SITEMINDER", "@Type": "22"}
+                },
+                %{
+                  BookingChannel: %{
+                    "@Primary": "false",
+                    "@Type": "7",
+                    CompanyName: %{"@Code": "EXPA", CompanyName: "Expedia Affilate Account"}
+                  },
+                  RequestorID: nil
                 }
-              }
-            ],
+              ]
+            },
             ResGlobalInfo: %{
               Comments: [%{Text: "will be arriving after 6 pm"}],
               DepositPayments: [

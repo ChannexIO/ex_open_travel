@@ -10,10 +10,13 @@ defmodule ExOpenTravel.Response.FaultProcessor do
   end
 
   def convert(%{faultcode: code, faultstring: string}),
-    do: Error.exception({:http_error, {code, string}})
+    do: Error.exception({:ota_error, {code, string}})
 
   def convert(%{"faultcode" => code, "faultstring" => string}),
-    do: Error.exception({:http_error, {code, string}})
+    do: Error.exception({:ota_error, {code, string}})
+
+  def convert(%{http_error: code}),
+    do: Error.exception({:http_error, {code, nil}})
 
   def convert({:fatal, reason}), do: Error.exception({:fatal, reason})
   def convert({:exit, reason}), do: Error.exception({:exit, reason})
