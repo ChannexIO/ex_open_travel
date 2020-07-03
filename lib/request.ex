@@ -1,5 +1,8 @@
 defmodule ExOpenTravel.Request do
   @moduledoc "Get HTTP request after validation payload"
+
+  use HTTPClient
+
   alias ExOpenTravel.Response.Parser
   @type options :: keyword() | any()
   @spec send({String.t(), map()}, map(), Keyword.t(), options) ::
@@ -12,10 +15,9 @@ defmodule ExOpenTravel.Request do
     recv_timeout = Keyword.get(opts, :recv_timeout, 120_000)
 
     {_, payload} =
-      response =
-      HTTPoison.post(endpoint, document, headers, timeout: timeout, recv_timeout: recv_timeout)
+      response = post(endpoint, document, headers, timeout: timeout, recv_timeout: recv_timeout)
 
-    with {:ok, parsed_response} <- Parser.handle_response(response) do
+    with {:ok, parsed_response} <- Parser.handle_response(response, endpoint) do
       {:ok, parsed_response,
        Map.merge(meta, %{
          status_code: payload.status_code,

@@ -25,7 +25,10 @@ defmodule ExOpenTravel.Error do
   def reason_for({:ota_error, {"316", string}}), do: {:required_phone_number_missing, string}
   def reason_for({:ota_error, {"321", string}}), do: {:required_field_missing, string}
   def reason_for({:ota_error, {"375", string}}), do: {:hotel_not_active, string}
-  def reason_for({:ota_error, {"385", string}}), do: {:invalid_confirmation_or_cancellation_number, string}
+
+  def reason_for({:ota_error, {"385", string}}),
+    do: {:invalid_confirmation_or_cancellation_number, string}
+
   def reason_for({:ota_error, {"392", string}}), do: {:invalid_property_code, string}
   def reason_for({:ota_error, {"400", string}}), do: {:invalid_property_code, string}
   def reason_for({:ota_error, {"402", string}}), do: {:invalid_room_type, string}
