@@ -1,7 +1,7 @@
 defmodule ExOpenTravel.MixProject do
   use Mix.Project
 
-  @version "0.3.1"
+  @version "0.3.2"
 
   def project do
     [

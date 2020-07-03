@@ -20,9 +20,9 @@ defmodule ExOpenTravel.Request do
     with {:ok, parsed_response} <- Parser.handle_response(response, endpoint) do
       {:ok, parsed_response,
        Map.merge(meta, %{
-         status_code: payload.status_code,
+         status_code: payload.status,
          response: payload.body,
-         headers: payload.headers,
+         headers: Enum.map(payload.headers, &Tuple.to_list/1),
          finished_at: DateTime.utc_now(),
          request: document,
          request_url: endpoint
