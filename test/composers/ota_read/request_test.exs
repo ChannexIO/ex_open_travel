@@ -23,8 +23,7 @@ defmodule ExOpenTravel.Composers.OtaRead.RequestTest do
     assert element ==
              {:"ns1:ReadRequests", nil,
               [
-                {:"ns1:HotelReadRequest", %{HotelCode: "00000"},
-                 nil}
+                {:"ns1:HotelReadRequest", %{HotelCode: "00000"}, nil}
               ]}
   end
 end

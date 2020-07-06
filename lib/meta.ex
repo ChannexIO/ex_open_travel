@@ -7,11 +7,11 @@ defmodule ExOpenTravel.Meta do
             errors: []
 
   @type t :: %__MODULE__{
-               request: String.t(),
-               response: String.t(),
-               method: String.t(),
-               started_at: DateTime.t(),
-               finished_at: DateTime.t(),
-               errors: list()
-             }
+          request: String.t(),
+          response: String.t(),
+          method: String.t(),
+          started_at: DateTime.t(),
+          finished_at: DateTime.t(),
+          errors: list()
+        }
 end

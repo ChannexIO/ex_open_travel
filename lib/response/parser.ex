@@ -126,19 +126,13 @@ defmodule ExOpenTravel.Response.Parser do
   defp soap_version, do: Application.fetch_env!(:ex_open_travel, :globals)[:version]
 
   def handle_response(
-        {:ok,
-         %HTTPoison.Response{
-           body: body,
-           headers: headers,
-           request_url: request_url,
-           status_code: status_code
-         }}
+        {:ok, %HTTPClient.Response{body: body, headers: headers, status: status}},
+        request_url
       ) do
-    {:ok,
-     %Response{body: body, headers: headers, request_url: request_url, status_code: status_code}}
+    {:ok, %Response{body: body, headers: headers, request_url: request_url, status_code: status}}
   end
 
-  def handle_response({:error, %HTTPoison.Error{reason: reason}}) do
+  def handle_response({:error, %HTTPClient.Error{reason: reason}}) do
     {:error, reason}
   end
 end

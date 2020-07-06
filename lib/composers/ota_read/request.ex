@@ -1,7 +1,6 @@
 defmodule ExOpenTravel.Composers.OtaRead.Request do
-  alias ExOpenTravel.Meta
-  alias ExOpenTravel.Request
-  alias ExOpenTravel.Request.PCIProxies.PCIBooking
+  alias ExOpenTravel.{Meta, Request}
+  alias ExOpenTravel.Request.PCIProxies.{ChannexPCI, PCIBooking}
   alias ExOpenTravel.Request.Document
   @action "OTA_Read"
 
@@ -18,6 +17,13 @@ defmodule ExOpenTravel.Composers.OtaRead.Request do
     |> build_read(meta)
     |> Document.build(@action, credentials)
     |> PCIBooking.proxy_send(credentials, opts)
+  end
+
+  def execute(%{hotel_code: _} = params, %{pci_proxy: :channex_pci} = credentials, meta, opts) do
+    params
+    |> build_read(meta)
+    |> Document.build(@action, credentials)
+    |> ChannexPCI.proxy_send(credentials, opts)
   end
 
   def execute(%{hotel_code: _} = params, credentials, meta, opts) do
