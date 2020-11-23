@@ -17,7 +17,7 @@ defmodule ExOpenTravel.Request do
     {_, payload} =
       response = post(endpoint, document, headers, timeout: timeout, recv_timeout: recv_timeout)
 
-    with {:ok, parsed_response} <- Parser.handle_response(response, endpoint) do
+    with {:ok, parsed_response} <- Parser.handle_response(response) do
       {:ok, parsed_response,
        Map.merge(meta, %{
          status_code: payload.status,
