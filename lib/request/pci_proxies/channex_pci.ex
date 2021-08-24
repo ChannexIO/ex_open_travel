@@ -58,8 +58,8 @@ defmodule ExOpenTravel.Request.PCIProxies.ChannexPCI do
       # The direction of the headers sequence is critical!
       %{
         tokens: headers |> get_from(fetch_header) |> split(","),
-        errors: headers |> get_from("X-PCI-CHANNEX-ERRORS") |> split(","),
-        warnings: headers |> get_from("X-PCI-CHANNEX-WARNINGS") |> split(",")
+        errors: headers |> get_from("x-pci-channex-errors") |> split(","),
+        warnings: headers |> get_from("x-pci-channex-warnings") |> split(",")
       }
     }
   end
@@ -119,11 +119,9 @@ defmodule ExOpenTravel.Request.PCIProxies.ChannexPCI do
 
   defp split(header, delimiter), do: header |> String.split(delimiter) |> Enum.map(&String.trim/1)
 
-  defp get_from(headers, key) do
-    with [[_, item] | _] <- Enum.filter(headers, fn [a, _] -> a == key end) do
-      item
-    else
-      _ -> nil
-    end
+  defp get_from(headers, key), do: Enum.find_value(headers, &compare_keys(&1, key))
+
+  defp compare_keys([header_key, header_value], key) do
+    if String.downcase(header_key) == String.downcase(key), do: header_value
   end
 end
