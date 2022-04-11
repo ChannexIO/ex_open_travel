@@ -1,7 +1,7 @@
 defmodule ExOpenTravel.MixProject do
   use Mix.Project
 
-  @version "0.3.11"
+  @version "0.3.12"
 
   def project do
     [
@@ -34,12 +34,12 @@ defmodule ExOpenTravel.MixProject do
     [
       {:sweet_xml, "~> 0.7.2"},
       {:xml_builder, "~> 2.2"},
-      {:http_client, github: "ChannexIO/http_client", tag: "v0.3.6"},
+      {:http_client, github: "ChannexIO/http_client", tag: "v0.3.7"},
       {:elixir_uuid, "~> 1.2.1"},
       {:erlsom, "~> 1.5"},
       {:exsom, "~> 0.2.1"},
       {:detergentex, "0.0.7"},
-      {:ex_doc, "~> 0.27.3", only: :dev}
+      {:ex_doc, "~> 0.28", only: :dev}
     ]
   end
 
